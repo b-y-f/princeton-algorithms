@@ -27,9 +27,6 @@ public class Percolation {
     }
 
     private void checkAroundAndConnect(int row, int col) {
-        if (!isValidRowCol(row, col)) {
-            return;
-        }
 
         if (row == 1) {
             prec.union(0, posToIdx(row, col));
