@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="done with stat">
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Algorithms__Part_I.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Algorithms__Part_I.xml" afterDir="false" />
+    <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="update for style check...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PercolationStats.java" beforeDir="false" afterPath="$PROJECT_DIR$/PercolationStats.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PercolationVisualizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/PercolationVisualizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +215,28 @@
       <option name="project" value="LOCAL" />
       <updated>1669537993113</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix for style check">
+      <created>1669539238058</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1669539238058</updated>
+    </task>
+    <task id="LOCAL-00011" summary="update for conf file">
+      <created>1669539308469</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1669539308469</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update for style check...">
+      <created>1669539801974</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1669539801974</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -279,6 +296,9 @@
     <MESSAGE value="useless validate" />
     <MESSAGE value="fix initial point and sometimes no percolate issue" />
     <MESSAGE value="done with stat" />
-    <option name="LAST_COMMIT_MESSAGE" value="done with stat" />
+    <MESSAGE value="fix for style check" />
+    <MESSAGE value="update for conf file" />
+    <MESSAGE value="update for style check..." />
+    <option name="LAST_COMMIT_MESSAGE" value="update for style check..." />
   </component>
 </project>
