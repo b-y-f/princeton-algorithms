@@ -66,7 +66,10 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return full.find(posToIdx(row, col)) == full.find(1);
+        if (isOpen(row, col)) {
+            return full.find(posToIdx(row, col)) == full.find(0);
+        }
+        return false;
     }
 
     // returns the number of open sites
@@ -77,7 +80,7 @@ public class Percolation {
     // does the system percolate?
     public boolean percolates() {
         // when upper and lower connected
-        return full.find(0) == prec.find(size * size - 1);
+        return prec.find(0) == prec.find(size * size - 1);
     }
 
     private boolean isValidRowCol(int row, int col) {
