@@ -8,7 +8,7 @@ public class Percolation {
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
-        if (n < 0) throw new IllegalArgumentException();
+        if (n < 1) throw new IllegalArgumentException();
         size = n;
         grid = new boolean[n * n];
         full = new WeightedQuickUnionUF(n * n);
