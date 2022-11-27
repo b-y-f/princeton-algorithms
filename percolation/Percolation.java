@@ -72,13 +72,15 @@ public class Percolation {
         return full.find(posToIdx(row, col)) == full.find(1);
     }
 
-    private int posToIdx(int row, int col) {
-        return (row - 1) * size + (col - 1);
-    }
-
     // returns the number of open sites
     public int numberOfOpenSites() {
         return numberOfOpenSites;
+    }
+
+    // does the system percolate?
+    public boolean percolates() {
+        // when upper and lower connected
+        return full.find(0) == prec.find(size * size - 1);
     }
 
     private boolean isValidRowCol(int row, int col) {
@@ -89,16 +91,14 @@ public class Percolation {
         return isValidRowCol(row, col) && isOpen(row, col);
     }
 
+    private int posToIdx(int row, int col) {
+        return (row - 1) * size + (col - 1);
+    }
+
     private void validation(int row, int col) {
         if (!isValidRowCol(row, col)) {
             throw new IllegalArgumentException();
         }
-    }
-
-    // does the system percolate?
-    public boolean percolates() {
-        // when upper and lower connected
-        return full.find(0) == prec.find(size * size - 1);
     }
 
 
