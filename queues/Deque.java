@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class Deque<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 4;
     private Item[] elements;
-    private int head = 0, tail = 0, size = 0, capacity = INIT_CAPACITY;
+    private int head = 0, tail = 0, size = 0;
 
     // construct an empty deque
     public Deque() {
@@ -25,7 +25,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public boolean isFull() {
-        return size == capacity;
+        return size == elements.length;
     }
 
     // return the number of items on the deque
@@ -39,7 +39,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException();
         }
         if (isFull()) {
-            resize();
+            resize(elements.length * 2);
         }
         if (isEmpty()) {
             elements[head] = item;
@@ -58,7 +58,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException();
         }
         if (isFull()) {
-            resize();
+            resize(elements.length * 2);
         }
         if (isEmpty()) {
             elements[tail] = item;
@@ -79,6 +79,7 @@ public class Deque<Item> implements Iterable<Item> {
         elements[head] = null;
         head = inc(head);
         size--;
+        if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
         if (isEmpty()) {
             tail = head;
         }
@@ -94,9 +95,11 @@ public class Deque<Item> implements Iterable<Item> {
         elements[tail] = null;
         tail = dec(tail);
         size--;
+        if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
         if (isEmpty()) {
             head = tail;
         }
+
         return e;
     }
 
@@ -105,22 +108,22 @@ public class Deque<Item> implements Iterable<Item> {
         return null;
     }
 
-    private void resize() {
-        Item[] copy = (Item[]) new Object[capacity * 2];
+    private void resize(int newCapacity) {
+        // if (newCapacity < elements.length) System.out.println("size shrinked" + newCapacity);
+        Item[] copy = (Item[]) new Object[newCapacity];
         for (int i = 0; i < size; i++)
             copy[i] = elements[(head + i) % size];
         elements = copy;
-        capacity *= 2;
         head = 0;
-        tail = size;
+        tail = size - 1;
     }
 
     private int dec(int i) {
-        return Math.floorMod(i - 1, capacity);
+        return Math.floorMod(i - 1, elements.length);
     }
 
     private int inc(int i) {
-        return (i + 1) % capacity;
+        return (i + 1) % elements.length;
     }
 
     // unit testing (required)
@@ -132,13 +135,17 @@ public class Deque<Item> implements Iterable<Item> {
         deque.addFirst(4);
         deque.addFirst(5);
         deque.addFirst(6);
+        deque.addFirst(7);
+        deque.addFirst(8);
+        deque.addFirst(9);
         StdOut.println("Size:" + deque.size());
-        StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing first:" + deque.removeFirst());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
+        StdOut.println("removing removeLast:" + deque.removeLast());
     }
 
 }
