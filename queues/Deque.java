@@ -38,11 +38,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) {
             throw new IllegalArgumentException();
         }
-
         if (isFull()) {
-            resize(2 * capacity);
+            resize();
         }
-        else if (isEmpty()) {
+        if (isEmpty()) {
             elements[head] = item;
         }
         else {
@@ -59,9 +58,9 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException();
         }
         if (isFull()) {
-            resize(2 * capacity);
+            resize();
         }
-        else if (isEmpty()) {
+        if (isEmpty()) {
             elements[tail] = item;
         }
         else {
@@ -106,11 +105,14 @@ public class Deque<Item> implements Iterable<Item> {
         return null;
     }
 
-    private void resize(int newCapacity) {
-        Item[] copy = (Item[]) new Object[newCapacity];
+    private void resize() {
+        Item[] copy = (Item[]) new Object[capacity * 2];
         for (int i = 0; i < size; i++)
-            copy[i] = elements[i];
+            copy[i] = elements[(head + i) % size];
         elements = copy;
+        capacity *= 2;
+        head = 0;
+        tail = size;
     }
 
     private int dec(int i) {
@@ -118,7 +120,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private int inc(int i) {
-        return Math.floorMod(i + 1, capacity);
+        return (i + 1) % capacity;
     }
 
     // unit testing (required)
