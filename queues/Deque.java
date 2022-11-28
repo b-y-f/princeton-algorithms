@@ -128,14 +128,17 @@ public class Deque<Item> implements Iterable<Item> {
         Deque<Integer> deque = new Deque<Integer>();
         deque.addFirst(1);
         deque.addFirst(2);
-        // deque.addFirst(3);
-        // deque.addFirst(4);
-        // deque.addFirst(5);
-        deque.addLast(9999);
+        deque.addFirst(3);
+        deque.addFirst(4);
+        deque.addFirst(5);
+        deque.addFirst(6);
         StdOut.println("Size:" + deque.size());
         StdOut.println("removing first:" + deque.removeFirst());
-        StdOut.println("removing last:" + deque.removeLast());
-        StdOut.println("Size:" + deque.size());
+        StdOut.println("removing first:" + deque.removeFirst());
+        StdOut.println("removing first:" + deque.removeFirst());
+        StdOut.println("removing first:" + deque.removeFirst());
+        StdOut.println("removing first:" + deque.removeFirst());
+        StdOut.println("removing first:" + deque.removeFirst());
     }
 
 }
