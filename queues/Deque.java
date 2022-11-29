@@ -78,11 +78,12 @@ public class Deque<Item> implements Iterable<Item> {
         Item e = elements[head];
         elements[head] = null;
         head = inc(head);
+
         size--;
-        if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
-        if (isEmpty()) {
-            tail = head;
+        if (size > 0 && size == elements.length / 4) {
+            resize(elements.length / 2);
         }
+
         return e;
     }
 
@@ -94,10 +95,10 @@ public class Deque<Item> implements Iterable<Item> {
         Item e = elements[tail];
         elements[tail] = null;
         tail = dec(tail);
+
         size--;
-        if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
-        if (isEmpty()) {
-            head = tail;
+        if (!isEmpty() && size == elements.length / 4) {
+            resize(elements.length / 2);
         }
 
         return e;
@@ -109,10 +110,9 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private void resize(int newCapacity) {
-        // if (newCapacity < elements.length) System.out.println("size shrinked" + newCapacity);
         Item[] copy = (Item[]) new Object[newCapacity];
         for (int i = 0; i < size; i++)
-            copy[i] = elements[(head + i) % size];
+            copy[i] = elements[(head + i) % elements.length];
         elements = copy;
         head = 0;
         tail = size - 1;
@@ -129,23 +129,20 @@ public class Deque<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
         Deque<Integer> deque = new Deque<Integer>();
-        deque.addFirst(1);
-        deque.addFirst(2);
-        deque.addFirst(3);
-        deque.addFirst(4);
-        deque.addFirst(5);
-        deque.addFirst(6);
-        deque.addFirst(7);
-        deque.addFirst(8);
-        deque.addFirst(9);
-        StdOut.println("Size:" + deque.size());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
-        StdOut.println("removing removeLast:" + deque.removeLast());
+        for (int i = 1; i < 10; i++) {
+            deque.addLast(i);
+        }
+        for (int i = 1; i < 10; i++) {
+            StdOut.println("removing :" + deque.removeLast());
+        }
+
+        for (int i = 1; i < 10; i++) {
+            deque.addFirst(i);
+        }
+        for (int i = 1; i < 10; i++) {
+            StdOut.println("removing :" + deque.removeFirst());
+        }
+
     }
 
 }
