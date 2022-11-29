@@ -106,7 +106,24 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
-        return null;
+        return new ReverseArrayIterator();
+    }
+
+    private class ReverseArrayIterator implements Iterator<Item> {
+        public boolean hasNext() {
+            return size > 0;
+        }
+
+        public Item next() {
+            if (!hasNext()) throw new java.util.NoSuchElementException();
+            size--;
+            return elements[--tail];
+
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     private void resize(int newCapacity) {
@@ -139,8 +156,13 @@ public class Deque<Item> implements Iterable<Item> {
         for (int i = 1; i < 10; i++) {
             deque.addFirst(i);
         }
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 5; i++) {
             StdOut.println("removing :" + deque.removeFirst());
+        }
+
+        Deque<Integer>.ReverseArrayIterator si = deque.new ReverseArrayIterator();
+        while (si.hasNext()) {
+            System.out.println(si.next());
         }
 
     }
