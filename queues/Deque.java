@@ -116,8 +116,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
+            Item e = elements[tail--];
             size--;
-            return elements[--tail];
+            return e;
 
         }
 
@@ -160,9 +161,8 @@ public class Deque<Item> implements Iterable<Item> {
             StdOut.println("removing :" + deque.removeFirst());
         }
 
-        Deque<Integer>.ReverseArrayIterator si = deque.new ReverseArrayIterator();
-        while (si.hasNext()) {
-            System.out.println(si.next());
+        for (Integer integer : deque) {
+            System.out.println(integer);
         }
 
     }
