@@ -16,6 +16,7 @@ public class Deque<Item> implements Iterable<Item> {
     // construct an empty deque
     public Deque() {
         // ugly cast :)
+
         elements = (Item[]) new Object[INIT_CAPACITY];
     }
 
@@ -24,7 +25,7 @@ public class Deque<Item> implements Iterable<Item> {
         return size == 0;
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return size == elements.length;
     }
 

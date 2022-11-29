@@ -13,6 +13,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 4;
     private Item[] elements;
     private int size = 0;
+    private int randIdx;
 
 
     // construct an empty randomized queue
@@ -25,7 +26,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return size == 0;
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return size == elements.length;
     }
 
@@ -46,8 +47,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (isEmpty()) throw new java.util.NoSuchElementException();
 
-        int randIdx = StdRandom.uniformInt(size);
-        Item ele = sample(randIdx);
+        randIdx = StdRandom.uniformInt(size);
+        Item ele = sample();
         elements[randIdx] = elements[size - 1];
         size--;
         if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
@@ -55,9 +56,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     // return a random item (but do not remove it)
-    public Item sample(int idx) {
+    public Item sample() {
         if (isEmpty()) throw new java.util.NoSuchElementException();
-        return elements[idx];
+        return elements[randIdx];
     }
 
     private void resize(int capacity) {
@@ -95,7 +96,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         for (int i = 1; i < 20; i++) {
             rqueue.enqueue(i);
         }
-        
+
         for (int elt : rqueue) {
             StdOut.print(elt + " ");
         }
