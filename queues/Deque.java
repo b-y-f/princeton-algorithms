@@ -4,6 +4,8 @@
  *  Description: Deque with circular array Implementation plus auto-resize
  **************************************************************************** */
 
+import edu.princeton.cs.algs4.StdOut;
+
 import java.util.Iterator;
 
 public class Deque<Item> implements Iterable<Item> {
@@ -114,15 +116,13 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class ReverseArrayIterator implements Iterator<Item> {
-        private int i = size;
-
         public boolean hasNext() {
-            return i > 0;
+            return size > 0;
         }
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
-            return elements[i--];
+            return removeFirst();
         }
 
         public void remove() {
@@ -150,9 +150,10 @@ public class Deque<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
         Deque<Integer> deque = new Deque<>();
-        deque.addFirst(1);
-        deque.iterator();
-        deque.iterator();
+        for (int j = 1; j <= 10; j++)
+            deque.addFirst(j);
+        Iterator<Integer> iterator = deque.iterator();
+        StdOut.println(iterator.next());
     }
 
 }
