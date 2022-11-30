@@ -4,8 +4,6 @@
  *  Description: Deque with circular array Implementation plus auto-resize
  **************************************************************************** */
 
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.Iterator;
 
 public class Deque<Item> implements Iterable<Item> {
@@ -87,7 +85,6 @@ public class Deque<Item> implements Iterable<Item> {
         if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
-
         return e;
     }
 
@@ -117,16 +114,15 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class ReverseArrayIterator implements Iterator<Item> {
+        private int i = size;
+
         public boolean hasNext() {
-            return size > 0;
+            return i > 0;
         }
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
-            Item e = elements[tail--];
-            size--;
-            return e;
-
+            return elements[i--];
         }
 
         public void remove() {
@@ -153,25 +149,10 @@ public class Deque<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
-        Deque<Integer> deque = new Deque<Integer>();
-        for (int i = 1; i < 10; i++) {
-            deque.addLast(i);
-        }
-        for (int i = 1; i < 10; i++) {
-            StdOut.println("removing :" + deque.removeLast());
-        }
-
-        for (int i = 1; i < 10; i++) {
-            deque.addFirst(i);
-        }
-        for (int i = 1; i < 5; i++) {
-            StdOut.println("removing :" + deque.removeFirst());
-        }
-
-        for (Integer integer : deque) {
-            System.out.println(integer);
-        }
-
+        Deque<Integer> deque = new Deque<>();
+        deque.addFirst(1);
+        deque.iterator();
+        deque.iterator();
     }
 
 }
