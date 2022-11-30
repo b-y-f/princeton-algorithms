@@ -4,7 +4,6 @@
  *  Description: Random queue with array
  **************************************************************************** */
 
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -37,6 +36,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
         if (isFull()) {
             resize(elements.length * 2);
         }
@@ -47,9 +49,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeue() {
         if (isEmpty()) throw new java.util.NoSuchElementException();
 
-        randIdx = StdRandom.uniformInt(size);
         Item ele = sample();
         elements[randIdx] = elements[size - 1];
+        elements[size - 1] = null;
         size--;
         if (size > 0 && size == elements.length / 4) resize(elements.length / 2);
         return ele;
@@ -58,6 +60,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     // return a random item (but do not remove it)
     public Item sample() {
         if (isEmpty()) throw new java.util.NoSuchElementException();
+        randIdx = StdRandom.uniformInt(size);
         return elements[randIdx];
     }
 
@@ -75,14 +78,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class ReverseArrayIterator implements Iterator<Item> {
 
+        private int index;
+        private Item[] cp;
+
+        public ReverseArrayIterator() {
+            cp = (Item[]) new Object[size];
+            for (int i = 0; i < size; i++) {
+                cp[i] = elements[i];
+            }
+            StdRandom.shuffle(cp);
+        }
+
         public boolean hasNext() {
-            return size > 0;
+            return index < size;
         }
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
-            Item ele = dequeue();
-            return ele;
+            return cp[index++];
         }
 
         public void remove() {
@@ -92,14 +105,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
-        RandomizedQueue<Integer> rqueue = new RandomizedQueue<Integer>();
-        for (int i = 1; i < 20; i++) {
-            rqueue.enqueue(i);
-        }
 
-        for (int elt : rqueue) {
-            StdOut.print(elt + " ");
-        }
     }
 
 }
