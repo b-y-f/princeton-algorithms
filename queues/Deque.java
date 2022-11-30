@@ -81,6 +81,9 @@ public class Deque<Item> implements Iterable<Item> {
         head = inc(head);
 
         size--;
+        if (isEmpty()) {
+            head = tail;
+        }
         if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
@@ -98,6 +101,9 @@ public class Deque<Item> implements Iterable<Item> {
         tail = dec(tail);
 
         size--;
+        if (isEmpty()) {
+            tail = head;
+        }
         if (!isEmpty() && size == elements.length / 4) {
             resize(elements.length / 2);
         }
