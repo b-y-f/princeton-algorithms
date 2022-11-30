@@ -1,7 +1,7 @@
 /* *****************************************************************************
  *  Name: Yifan
  *  Date: 2022-Nov-28
- *  Description: Deque with circular array Implementation plus auto-resize
+ *  Description: Deque with array Implementation plus auto-resize
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.StdOut;
@@ -116,13 +116,18 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class ReverseArrayIterator implements Iterator<Item> {
+        private int i = size, h = head;
+
         public boolean hasNext() {
-            return size > 0;
+            return i > 0;
         }
 
         public Item next() {
             if (!hasNext()) throw new java.util.NoSuchElementException();
-            return removeFirst();
+            i--;
+            Item e = elements[h];
+            h = inc(h);
+            return e;
         }
 
         public void remove() {
@@ -150,10 +155,18 @@ public class Deque<Item> implements Iterable<Item> {
     // unit testing (required)
     public static void main(String[] args) {
         Deque<Integer> deque = new Deque<>();
-        for (int j = 1; j <= 10; j++)
-            deque.addFirst(j);
-        Iterator<Integer> iterator = deque.iterator();
-        StdOut.println(iterator.next());
+        // for (int j = 1; j <= 100; j++)
+        //     deque.addFirst(j);
+        // Iterator<Integer> iterator = deque.iterator();
+        // iterator.hasNext();
+        // iterator.hasNext();
+        // iterator.hasNext();
+        // iterator.hasNext();
+        // StdOut.println(iterator.next());
+
+        deque.addFirst(1);
+        deque.iterator().next();
+        StdOut.println(deque.removeFirst());
     }
 
 }
