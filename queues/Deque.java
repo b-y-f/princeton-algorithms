@@ -1,7 +1,7 @@
 /* *****************************************************************************
  *  Name: Yifan
  *  Date: 2022-Nov-28
- *  Description: Deque with array Implementation plus auto-resize
+ *  Description: Deque with circular array Implementation plus auto-resize
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.StdOut;
