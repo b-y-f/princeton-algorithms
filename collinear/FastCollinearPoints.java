@@ -24,14 +24,17 @@ public class FastCollinearPoints {
 
         for (Point p : cpPoints) {
             Arrays.sort(cpPoints, p.slopeOrder());
-            for (int first = 1, last = 2; last < cpPoints.length; last++) {
-                if (p.slopeTo(cpPoints[first]) == p.slopeTo(cpPoints[last])) {
-                    continue;
+            int first = 1, last = 2;
+            while (last < cpPoints.length) {
+                while (last < cpPoints.length && p.slopeTo(cpPoints[first]) == p.slopeTo(
+                        cpPoints[last])) {
+                    last++;
                 }
                 if (last - first > 2 && p.compareTo(cpPoints[first]) < 0) {
                     lines.add(new LineSegment(p, cpPoints[last - 1]));
                 }
                 first = last;
+                last++;
             }
             Arrays.sort(cpPoints);
         }
