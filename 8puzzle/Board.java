@@ -57,9 +57,9 @@ public class Board {
                 if (board[i][j] != 0 && board[i][j] != goal[i][j]) {
                     hamming++;
                     int[] goalIdxs = getGoalIndex(board[i][j]);
-                    int goal_i = goalIdxs[0];
-                    int goal_j = goalIdxs[1];
-                    manhattan += Math.abs(i - goal_i) + Math.abs(j - goal_j);
+                    int gi = goalIdxs[0];
+                    int gj = goalIdxs[1];
+                    manhattan += Math.abs(i - gi) + Math.abs(j - gj);
                 }
             }
         }
