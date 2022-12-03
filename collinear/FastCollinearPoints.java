@@ -1,28 +1,54 @@
 /* *****************************************************************************
- *  Name:
- *  Date:
- *  Description:
+ *  Name: Yifan
+ *  Date: 2022-Dec-02
+ *  Description: O(N^2log(N)) solution
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class FastCollinearPoints {
-    public FastCollinearPoints(
-            Point[] points)     // finds all line segments containing 4 or more points
-    {
+    private ArrayList<LineSegment> lines = new ArrayList<LineSegment>();
 
+    public FastCollinearPoints(Point[] points)
+    // finds all line segments containing 4 or more points
+    {
+        if (points == null) throw new IllegalArgumentException();
+
+        Arrays.sort(points);
+
+        for (int i = 0; i < points.length; i++) {
+            Point origin = points[i];
+            Arrays.sort(points, origin.slopeOrder());
+            for (int first = 1, last = 2; last < points.length; last++) {
+                if (origin.slopeTo(points[first]) == origin.slopeTo(points[last])) {
+                    continue;
+                }
+
+                if (last - first > 2 && origin.compareTo(points[first]) < 0) {
+                    lines.add(new LineSegment(origin, points[last - 1]));
+                }
+                first = last;
+            }
+            Arrays.sort(points);
+        }
     }
 
-    public int numberOfSegments()        // the number of line segments
+
+    public int numberOfSegments()
+    // the number of line segments
     {
-        return 0;
+        return lines.size();
     }
 
-    public LineSegment[] segments()                // the line segments
+    public LineSegment[] segments()
+    // the line segments
     {
-        return new LineSegment[0];
+        return lines.toArray(new LineSegment[numberOfSegments()]);
     }
 
     public static void main(String[] args) {
