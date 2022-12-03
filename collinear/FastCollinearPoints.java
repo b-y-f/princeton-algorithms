@@ -17,27 +17,41 @@ public class FastCollinearPoints {
     public FastCollinearPoints(Point[] points)
     // finds all line segments containing 4 or more points
     {
-        if (points == null) throw new IllegalArgumentException();
+        edgeCases(points);
 
-        Arrays.sort(points);
+        Point[] cpPoints = points.clone();
+        Arrays.sort(cpPoints);
 
-        for (int i = 0; i < points.length; i++) {
-            Point origin = points[i];
-            Arrays.sort(points, origin.slopeOrder());
-            for (int first = 1, last = 2; last < points.length; last++) {
-                if (origin.slopeTo(points[first]) == origin.slopeTo(points[last])) {
+        for (int i = 0; i < cpPoints.length; i++) {
+            Point origin = cpPoints[i];
+            Arrays.sort(cpPoints, origin.slopeOrder());
+            for (int first = 1, last = 2; last < cpPoints.length; last++) {
+                if (origin.slopeTo(cpPoints[first]) == origin.slopeTo(cpPoints[last])) {
                     continue;
                 }
 
-                if (last - first > 2 && origin.compareTo(points[first]) < 0) {
-                    lines.add(new LineSegment(origin, points[last - 1]));
+                if (last - first > 2 && origin.compareTo(cpPoints[first]) < 0) {
+                    lines.add(new LineSegment(origin, cpPoints[last - 1]));
                 }
                 first = last;
             }
-            Arrays.sort(points);
+            Arrays.sort(cpPoints);
         }
     }
 
+    private void edgeCases(Point[] points) {
+        if (points == null) throw new IllegalArgumentException();
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException();
+            }
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[i].equals(points[j])) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
+    }
 
     public int numberOfSegments()
     // the number of line segments

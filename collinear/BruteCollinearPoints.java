@@ -16,18 +16,22 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) // finds all line segments containing 4 points
     {
-        if (points == null) throw new IllegalArgumentException();
-        Arrays.sort(points);
+        edgeCases(points);
+        
         lines = new ArrayList<LineSegment>();
+        Point[] cpPoints = points.clone();
 
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                for (int k = j + 1; k < points.length; k++) {
-                    for (int m = k + 1; m < points.length; m++) {
-                        Point p = points[i];
-                        Point q = points[j];
-                        Point r = points[k];
-                        Point s = points[m];
+        Arrays.sort(cpPoints);
+
+
+        for (int i = 0; i < cpPoints.length; i++) {
+            for (int j = i + 1; j < cpPoints.length; j++) {
+                for (int k = j + 1; k < cpPoints.length; k++) {
+                    for (int m = k + 1; m < cpPoints.length; m++) {
+                        Point p = cpPoints[i];
+                        Point q = cpPoints[j];
+                        Point r = cpPoints[k];
+                        Point s = cpPoints[m];
                         if (p.slopeTo(q) == q.slopeTo(r) && q.slopeTo(r) == r.slopeTo(s)) {
                             assert lines != null;
                             lines.add(new LineSegment(p, s));
@@ -37,6 +41,20 @@ public class BruteCollinearPoints {
             }
         }
 
+    }
+
+    private void edgeCases(Point[] points) {
+        if (points == null) throw new IllegalArgumentException();
+        for (int i = 0; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException();
+            }
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[i].equals(points[j])) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
     }
 
     public int numberOfSegments()     // the number of line segments
