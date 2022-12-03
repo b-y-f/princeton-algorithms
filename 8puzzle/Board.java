@@ -5,6 +5,7 @@
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Arrays;
 
@@ -105,8 +106,20 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
+        // switch any two except empty tile
+        int a1, a2, b1, b2;
+        do {
+            a1 = StdRandom.uniformInt(dimension());
+            a2 = StdRandom.uniformInt(dimension());
+            b1 = StdRandom.uniformInt(dimension());
+            b2 = StdRandom.uniformInt(dimension());
+        } while (board[a1][a2] == 0 || board[b1][b2] == 0 || board[a1][a2] == board[b1][b2]);
+        int tmp;
+        tmp = board[a1][a2];
+        board[a1][a2] = board[b1][b2];
+        board[b1][b2] = tmp;
 
-        return null;
+        return new Board(board);
     }
 
     // unit testing (not graded)
@@ -125,10 +138,12 @@ public class Board {
 
             // solve the slider puzzle
             Board initial = new Board(tiles);
-            // System.out.println(initial.toString());
-            System.out.println(initial.isGoal());
-            System.out.println(initial.hamming());
-            System.out.println(initial.manhattan());
+            System.out.println(initial.toString());
+            // System.out.println(initial.isGoal());
+            // System.out.println(initial.hamming());
+            // System.out.println(initial.manhattan());
+            Board newBoard = initial.twin();
+            System.out.println(newBoard.toString());
         }
     }
 
