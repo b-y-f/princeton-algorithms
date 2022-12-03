@@ -5,6 +5,8 @@
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Arrays;
@@ -39,7 +41,7 @@ public class Board {
         sb.append(String.valueOf(dimension()) + '\n');
         for (int i = 0; i < dimension(); i++) {
             for (int j = 0; j < board[0].length; j++) {
-                sb.append(board[i][j]).append("\t");
+                sb.append(" ").append(board[i][j]).append("\t");
             }
             sb.append("\n");
         }
@@ -99,9 +101,52 @@ public class Board {
         return Arrays.deepEquals(board, that);
     }
 
+    private int[][] deepCopy(int[][] board) {
+        int n = board.length;
+        int[][] cp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cp[i][j] = board[i][j];
+            }
+        }
+        return cp;
+    }
+
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        return null;
+        Stack<Board> deque = new Stack<>();
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
+                if (board[i][j] == 0) {
+                    if (i - 1 >= 0) {
+                        int[][] cp = deepCopy(board);
+                        cp[i][j] = cp[i - 1][j];
+                        cp[i - 1][j] = 0;
+                        deque.push(new Board(cp));
+                    }
+                    if (i + 1 < dimension()) {
+                        int[][] cp = deepCopy(board);
+                        cp[i][j] = cp[i + 1][j];
+                        cp[i + 1][j] = 0;
+                        deque.push(new Board(cp));
+                    }
+                    if (j - 1 >= 0) {
+                        int[][] cp = deepCopy(board);
+                        cp[i][j] = cp[i][j - 1];
+                        cp[i][j - 1] = 0;
+                        deque.push(new Board(cp));
+                    }
+                    if (j + 1 < dimension()) {
+                        int[][] cp = deepCopy(board);
+                        cp[i][j] = cp[i][j + 1];
+                        cp[i][j + 1] = 0;
+                        deque.push(new Board(cp));
+                    }
+                    return deque;
+                }
+            }
+        }
+        return deque;
     }
 
     // a board that is obtained by exchanging any pair of tiles
@@ -138,12 +183,11 @@ public class Board {
 
             // solve the slider puzzle
             Board initial = new Board(tiles);
-            System.out.println(initial.toString());
-            // System.out.println(initial.isGoal());
-            // System.out.println(initial.hamming());
-            // System.out.println(initial.manhattan());
-            Board newBoard = initial.twin();
-            System.out.println(newBoard.toString());
+            // System.out.println(initial.toString());
+
+            for (Board nei : initial.neighbors()) {
+                StdOut.println(nei.toString());
+            }
         }
     }
 
