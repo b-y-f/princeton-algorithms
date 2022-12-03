@@ -22,16 +22,14 @@ public class FastCollinearPoints {
         Point[] cpPoints = points.clone();
         Arrays.sort(cpPoints);
 
-        for (int i = 0; i < cpPoints.length; i++) {
-            Point origin = cpPoints[i];
-            Arrays.sort(cpPoints, origin.slopeOrder());
+        for (Point p : cpPoints) {
+            Arrays.sort(cpPoints, p.slopeOrder());
             for (int first = 1, last = 2; last < cpPoints.length; last++) {
-                if (origin.slopeTo(cpPoints[first]) == origin.slopeTo(cpPoints[last])) {
+                if (p.slopeTo(cpPoints[first]) == p.slopeTo(cpPoints[last])) {
                     continue;
                 }
-
-                if (last - first > 2 && origin.compareTo(cpPoints[first]) < 0) {
-                    lines.add(new LineSegment(origin, cpPoints[last - 1]));
+                if (last - first > 2 && p.compareTo(cpPoints[first]) < 0) {
+                    lines.add(new LineSegment(p, cpPoints[last - 1]));
                 }
                 first = last;
             }
