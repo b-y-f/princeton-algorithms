@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="" />
+    <list default="true" id="c1e4f978-b3bd-4ae1-84e9-9e1170bce808" name="Default" comment="concise loop">
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FastCollinearPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/FastCollinearPoints.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +26,11 @@
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
     <option name="SCHEME" value="Project" />
   </component>
   <component name="FindBugs-IDEA-Workspace">
@@ -30,6 +42,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
@@ -74,14 +89,72 @@
     <option name="showModules" value="false" />
     <option name="sortByType" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "/Users/yifan/coursera-princeton-algorithms/collinear",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/Users/yifan/coursera-princeton-algorithms/collinear&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="Application.FastCollinearPoints">
+    <configuration name="BruteCollinearPoints" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BruteCollinearPoints" />
+      <module name="collinear" />
+      <option name="PROGRAM_PARAMETERS" value="input3null.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FastCollinearPoints" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="FastCollinearPoints" />
+      <module name="collinear" />
+      <option name="PROGRAM_PARAMETERS" value="input9.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Point" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Point" />
+      <module name="collinear" />
+      <option name="PROGRAM_PARAMETERS" value="input100.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Subsets" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Subsets" />
+      <module name="collinear" />
+      <option name="PROGRAM_PARAMETERS" value="input100.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <module name="collinear" />
+      <option name="PROGRAM_PARAMETERS" value="rs1423.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Subsets" />
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.FastCollinearPoints" />
+      <item itemvalue="Application.BruteCollinearPoints" />
+      <item itemvalue="Application.Point" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.FastCollinearPoints" />
+        <item itemvalue="Application.BruteCollinearPoints" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Point" />
+        <item itemvalue="Application.Subsets" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -90,6 +163,112 @@
       <option name="presentableId" value="Default" />
       <updated>1669810956974</updated>
     </task>
+    <task id="LOCAL-00001" summary="update misc">
+      <created>1669811025088</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669811025088</updated>
+    </task>
+    <task id="LOCAL-00002" summary="done code with Point.java">
+      <created>1669941660488</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669941660488</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix condition">
+      <created>1669945256255</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669945256255</updated>
+    </task>
+    <task id="LOCAL-00004" summary="draw from input file">
+      <created>1669954178139</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669954178139</updated>
+    </task>
+    <task id="LOCAL-00005" summary="skeleton for BruteCollinearPoints">
+      <created>1669954252610</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669954252610</updated>
+    </task>
+    <task id="LOCAL-00006" summary="test line drawing">
+      <created>1669954577842</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669954577842</updated>
+    </task>
+    <task id="LOCAL-00007" summary="done with BruteCollinearPoints">
+      <created>1669962268656</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669962268656</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add skeleton for FastCollinearPoints">
+      <created>1669962450949</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1669962450949</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add skeleton for FastCollinearPoints">
+      <created>1669962494095</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1669962494095</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add skeleton for FastCollinearPoints">
+      <created>1669962504612</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1669962504612</updated>
+    </task>
+    <task id="LOCAL-00011" summary="small change for segement size">
+      <created>1669962877385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1669962877385</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixed compare method">
+      <created>1669978341538</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1669978341538</updated>
+    </task>
+    <task id="LOCAL-00013" summary="done with function">
+      <created>1670032909470</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1670032909470</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix mutation points issues, null and duplicates edge cases">
+      <created>1670034602605</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1670034602605</updated>
+    </task>
+    <task id="LOCAL-00015" summary="concise loop">
+      <created>1670048749826</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670048749826</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -138,5 +317,21 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update misc" />
+    <MESSAGE value="done code with Point.java" />
+    <MESSAGE value="fix condition" />
+    <MESSAGE value="draw from input file" />
+    <MESSAGE value="skeleton for BruteCollinearPoints" />
+    <MESSAGE value="test line drawing" />
+    <MESSAGE value="done with BruteCollinearPoints" />
+    <MESSAGE value="add skeleton for FastCollinearPoints" />
+    <MESSAGE value="small change for segement size" />
+    <MESSAGE value="fixed compare method" />
+    <MESSAGE value="done with function" />
+    <MESSAGE value="fix mutation points issues, null and duplicates edge cases" />
+    <MESSAGE value="concise loop" />
+    <option name="LAST_COMMIT_MESSAGE" value="concise loop" />
   </component>
 </project>
