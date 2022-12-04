@@ -153,19 +153,16 @@ public class Board {
     // a board that is obtained by exchanging any pair of tiles
     public Board twin() {
         // switch any two except empty tile
-        int a1, a2, b1, b2;
-        do {
-            a1 = StdRandom.uniformInt(dimension());
-            a2 = StdRandom.uniformInt(dimension());
-            b1 = StdRandom.uniformInt(dimension());
-            b2 = StdRandom.uniformInt(dimension());
-        } while (board[a1][a2] == 0 || board[b1][b2] == 0 || board[a1][a2] == board[b1][b2]);
-        int tmp;
-        tmp = board[a1][a2];
-        board[a1][a2] = board[b1][b2];
-        board[b1][b2] = tmp;
-
-        return new Board(board);
+        int[][] twin = deepCopy(board);
+        if (board[0][0] != 0 && board[0][1] != 0) {
+            twin[0][0] = board[0][1];
+            twin[0][1] = board[0][0];
+        }
+        else {
+            twin[1][0] = board[1][1];
+            twin[1][1] = board[1][0];
+        }
+        return new Board(twin);
     }
 
     // unit testing (not graded)
