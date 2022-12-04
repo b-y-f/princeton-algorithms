@@ -97,8 +97,14 @@ public class Board {
         if (y == this) return true;
         if (y == null) return false;
         if (y.getClass() != this.getClass()) return false;
-        int[][] that = (int[][]) y;
-        return Arrays.deepEquals(board, that);
+        Board that = (Board) y;
+        if (dimension() != that.dimension()) return false;
+        for (int i = 0; i < dimension(); i++) {
+            for (int j = 0; j < dimension(); j++) {
+                if (board[i][j] != that.board[i][j]) return false;
+            }
+        }
+        return true;
     }
 
     private int[][] deepCopy(int[][] board) {
