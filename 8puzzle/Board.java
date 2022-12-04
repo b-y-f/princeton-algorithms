@@ -107,15 +107,18 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
-
+        int zeroI = 0, zeroJ = 0;
+        outter:
         for (int i = 0; i < dimension(); i++) {
             for (int j = 0; j < dimension(); j++) {
                 if (board[i][j] == 0) {
-                    return checkNeighbor(i, j);
+                    zeroI = i;
+                    zeroJ = j;
+                    break outter;
                 }
             }
         }
-        return null;
+        return checkNeighbor(zeroI, zeroJ);
     }
 
     private Stack<Board> checkNeighbor(int i, int j) {
