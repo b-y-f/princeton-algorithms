@@ -120,37 +120,42 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        Stack<Board> deque = new Stack<>();
+
         for (int i = 0; i < dimension(); i++) {
             for (int j = 0; j < dimension(); j++) {
                 if (board[i][j] == 0) {
-                    if (i - 1 >= 0) {
-                        int[][] cp = deepCopy(board);
-                        cp[i][j] = cp[i - 1][j];
-                        cp[i - 1][j] = 0;
-                        deque.push(new Board(cp));
-                    }
-                    if (i + 1 < dimension()) {
-                        int[][] cp = deepCopy(board);
-                        cp[i][j] = cp[i + 1][j];
-                        cp[i + 1][j] = 0;
-                        deque.push(new Board(cp));
-                    }
-                    if (j - 1 >= 0) {
-                        int[][] cp = deepCopy(board);
-                        cp[i][j] = cp[i][j - 1];
-                        cp[i][j - 1] = 0;
-                        deque.push(new Board(cp));
-                    }
-                    if (j + 1 < dimension()) {
-                        int[][] cp = deepCopy(board);
-                        cp[i][j] = cp[i][j + 1];
-                        cp[i][j + 1] = 0;
-                        deque.push(new Board(cp));
-                    }
-                    return deque;
+                    return checkNeighbor(i, j);
                 }
             }
+        }
+        return null;
+    }
+
+    private Stack<Board> checkNeighbor(int i, int j) {
+        Stack<Board> deque = new Stack<>();
+        if (i - 1 >= 0) {
+            int[][] cp = deepCopy(board);
+            cp[i][j] = cp[i - 1][j];
+            cp[i - 1][j] = 0;
+            deque.push(new Board(cp));
+        }
+        if (i + 1 < dimension()) {
+            int[][] cp = deepCopy(board);
+            cp[i][j] = cp[i + 1][j];
+            cp[i + 1][j] = 0;
+            deque.push(new Board(cp));
+        }
+        if (j - 1 >= 0) {
+            int[][] cp = deepCopy(board);
+            cp[i][j] = cp[i][j - 1];
+            cp[i][j - 1] = 0;
+            deque.push(new Board(cp));
+        }
+        if (j + 1 < dimension()) {
+            int[][] cp = deepCopy(board);
+            cp[i][j] = cp[i][j + 1];
+            cp[i][j + 1] = 0;
+            deque.push(new Board(cp));
         }
         return deque;
     }
