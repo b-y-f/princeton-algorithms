@@ -177,11 +177,17 @@ public class Board {
 
             // solve the slider puzzle
             Board initial = new Board(tiles);
+
+            System.out.println("M_dist : " + initial.manhattan());
             // System.out.println(initial.toString());
 
-            for (Board nei : initial.neighbors()) {
-                StdOut.println(nei.toString());
-            }
+            // for (Board nei : initial.neighbors()) {
+            //     StdOut.println(nei.toString());
+            // }
+
+            // test twin
+            Board test = initial.twin();
+            StdOut.println(test.toString());
         }
     }
 
