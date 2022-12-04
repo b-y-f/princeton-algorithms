@@ -90,12 +90,12 @@ public class Board {
         return true;
     }
 
-    private int[][] deepCopy(int[][] board) {
-        int n = board.length;
+    private int[][] deepCopy(int[][] b) {
+        int n = b.length;
         int[][] cp = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                cp[i][j] = board[i][j];
+                cp[i][j] = b[i][j];
             }
         }
         return cp;
