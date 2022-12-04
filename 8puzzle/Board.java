@@ -7,9 +7,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
-
-import java.util.Arrays;
 
 public class Board {
 
@@ -56,21 +53,20 @@ public class Board {
         return hamming;
     }
 
-    private int[] getGoalIndex(int value) {
-        int[] tmp = new int[2];
-        for (int i = 0; i < dimension(); i++) {
-            for (int j = 0; j < dimension(); j++) {
-                if (value == goal[i][j]) {
-                    tmp[0] = i;
-                    tmp[1] = j;
-                }
-            }
-        }
-        return tmp;
-    }
 
     // sum of Manhattan distances between tiles and goal
     public int manhattan() {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                int val = board[i][j];
+                if (val == 0)
+                    continue;
+                // in java int 3/2 = 1...
+                int x = (val - 1) / dimension;
+                int y = (val - 1) % dimension;
+                manhattan += Math.abs(x - i) + Math.abs(y - j);
+            }
+        }
         return manhattan;
     }
 
