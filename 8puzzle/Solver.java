@@ -27,6 +27,7 @@ public class Solver {
 
 
     private MinPQ<Node> pq;
+    private boolean solvable = true;
 
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
@@ -35,10 +36,29 @@ public class Solver {
         }
 
         pq = new MinPQ<Node>();
+        MinPQ<Node> twin = new MinPQ<Node>();
+
         pq.insert(new Node(initial, 0, null));
+        twin.insert(new Node(initial.twin(), 0, null));
 
         while (!pq.min().board.isGoal()) {
+
             Node node = pq.delMin();
+            Node nodeTwin = twin.delMin();
+
+            if (nodeTwin.board.isGoal()) {
+                // System.out.println("unsolvable");
+                solvable = false;
+                break;
+            }
+
+            for (Board nei : nodeTwin.board.neighbors()) {
+                if (nodeTwin.moves == 0 || !nei.equals(nodeTwin.prev.board)) {
+                    twin.insert(new Node(nei, nodeTwin.moves + 1, nodeTwin));
+                }
+            }
+
+
             for (Board nei : node.board.neighbors()) {
                 if (node.moves == 0 || !nei.equals(node.prev.board)) {
                     pq.insert(new Node(nei, node.moves + 1, node));
@@ -50,7 +70,7 @@ public class Solver {
 
     // is the initial board solvable? (see below)
     public boolean isSolvable() {
-        return pq.min().board.isGoal();
+        return pq.min().board.isGoal() && solvable;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
