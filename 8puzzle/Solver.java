@@ -1,5 +1,27 @@
 public class Solver {
 
+    private class Node implements Comparable<Node> {
+        private Board board;
+        private int moves, score;
+        private Node prev;
+
+        Node(Board board, int moves, Node prev) {
+            this.board = board;
+            this.moves = moves;
+            this.prev = prev;
+            this.score = board.manhattan() + moves;
+        }
+
+        public int compareTo(Node other) {
+            if (this.score == other.score) {
+                return Integer.compare(this.board.manhattan(), other.board.manhattan());
+            }
+            else {
+                return Integer.compare(this.score, other.score);
+            }
+        }
+    }
+
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
         if (initial == null) {
