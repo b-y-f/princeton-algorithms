@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Autograder Feedback</title>
+<meta charset="UTF-8">
+</head>
+
+<body>
+
+<p>
+<em>
+See the Assessment Guide for information on how to interpret this report.
+</em>
+<br><br>
+
+<h2>ASSESSMENT SUMMARY</h2>
+<pre>
+
+Compilation:  <font color = #009900>PASSED</font>
+API:          <font color = #009900>PASSED</font>
+
+SpotBugs:     <font color = #009900>PASSED</font>
+PMD:          <font color = #009900>PASSED</font>
+Checkstyle:   <font color = #009900>PASSED</font>
+
+Correctness:  <font color = #009900>13/13 tests passed</font>
+Memory:       <font color = #009900>No tests available for autograding.</font>
+Timing:       <font color = #009900>No tests available for autograding.</font>
+
+Aggregate score: 100.00%
+[ Compilation: 5%, API: 5%, Style: 0%, Correctness: 90% ]
+</pre>
+
+
+<br><br>
+
+<h2>ASSESSMENT DETAILS</h2>
+
+<pre>
+
+The following files were submitted:
+----------------------------------
+ 352 Nov 26 07:36 HelloGoodbye.java
+ 997 Nov 26 07:36 HelloWorld.java
+ 451 Nov 26 07:36 RandomWord.java
+
+
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
+
+
+% javac HelloWorld.java
+*-----------------------------------------------------------
+
+% javac HelloGoodbye.java
+*-----------------------------------------------------------
+
+% javac RandomWord.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+HelloWorld:
+
+HelloGoodbye:
+
+RandomWord:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS                                       
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for HelloWorld.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for HelloGoodbye.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for RandomWord.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of HelloWorld
+*-----------------------------------------------------------
+Running 2 total tests.
+
+Test 1: check output format of main()
+  % java HelloWorld
+  Hello, World
+
+==&gt; passed
+
+Test 2: check correctness of main()
+  * java HelloWorld
+==&gt; passed
+
+
+HelloWorld Total: 2/2 tests passed!
+
+
+================================================================
+Testing correctness of HelloGoodbye
+*-----------------------------------------------------------
+Running 6 total tests.
+
+Test 1: check output format of main()
+  % java HelloGoodbye Kevin Bob
+  Hello Kevin and Bob.
+  Goodbye Bob and Kevin.
+
+  % java HelloGoodbye Alejandra Bahati
+  Hello Alejandra and Bahati.
+  Goodbye Bahati and Alejandra.
+
+==&gt; passed
+
+Test 2: check correctness of main() using names from assignment specification
+  * java HelloGoodbye Kevin Bob
+  * java HelloGoodbye Alejandra Bahati
+==&gt; passed
+
+Test 3: check correctness of main() using fixed names
+  * java HelloGoodbye Chandra Deshi
+  * java HelloGoodbye Ayşe María
+  * java HelloGoodbye Wayan Taiyeo
+  * java HelloGoodbye Ástfríður Bedřiška
+==&gt; passed
+
+Test 4: check correctness of main() when two names are the same
+  * java HelloGoodbye Turing Turing
+  * java HelloGoodbye Lovelace Lovelace
+  * java HelloGoodbye Hopper Hopper
+  * java HelloGoodbye Knuth Knuth
+==&gt; passed
+
+Test 5: check correctness of main() using random names
+  * java HelloGoodbye Vili Elmi
+  * java HelloGoodbye Félix Tudorache
+  * java HelloGoodbye Marshall Kortney
+  * java HelloGoodbye Rüveyda Sergej
+  * java HelloGoodbye Dayton Casian
+==&gt; passed
+
+Test 6: test correctness of main() using many random names
+  * 10 pairs of random names
+  * 100 pairs of random names
+  * 1000 pairs of random names
+  * 10000 pairs of random names
+==&gt; passed
+
+
+HelloGoodbye Total: 6/6 tests passed!
+
+
+================================================================
+Testing correctness of RandomWord
+*-----------------------------------------------------------
+Running 5 total tests.
+
+Test 1: check that main() prints exactly one word
+  % java-algs4 RandomWord  &lt; animals8.txt
+  horse
+
+  % java-algs4 RandomWord  &lt; animals8.txt
+  bear
+
+  % java-algs4 RandomWord  &lt; coin.txt
+  tails
+
+  % java-algs4 RandomWord  &lt; names.txt
+  Annechien
+
+==&gt; passed
+
+Test 2: check that the first word main() prints appears on standrd input
+  * 10000 trials from coin.txt
+  * 10000 trials from animals8.txt
+  * 10000 trials from animals.txt
+  * 10000 trials from colors.txt
+  * 10000 trials from algorithms.txt
+  * 10000 trials from dream.txt
+==&gt; passed
+
+Test 3: check that main() consumes all data from standard input
+  * coin.txt
+  * animals8.txt
+  * animals.txt
+  * colors.txt
+  * algorithms.txt
+  * names.txt
+  * dream.txt
+==&gt; passed
+
+Test 4: check that main() chooses a word uniformly at random
+  * 12000 trials from coin.txt
+  * 12000 trials from roshambo.txt
+  * 12000 trials from die.txt
+  * 12000 trials from animals8.txt
+  * 12000 trials from animals25.txt
+  * 12000 trials from algorithms.txt
+==&gt; passed
+
+Test 5: check that main() chooses a word uniformly at random
+        (with some words on standard input repeated)
+  * 36000 trials from biased-coin.txt
+  * 36000 trials from loaded-die.txt
+  * 36000 trials from two-dice.txt
+  * 36000 trials from tinyTale.txt
+==&gt; passed
+
+
+RandomWord Total: 5/5 tests passed!
+
+
+================================================================
+
+</pre>
+</body>
+</html>
