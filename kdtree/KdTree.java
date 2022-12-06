@@ -4,6 +4,7 @@
  **************************************************************************** */
 
 import edu.princeton.cs.algs4.Point2D;
+import edu.princeton.cs.algs4.RectHV;
 
 public class KdTree {
     public static void main(String[] args) {
@@ -18,5 +19,9 @@ public class KdTree {
 
     public Point2D nearest(Point2D query) {
         return query;
+    }
+
+    public Point2D[] range(RectHV rect) {
+        return new Point2D[0];
     }
 }
