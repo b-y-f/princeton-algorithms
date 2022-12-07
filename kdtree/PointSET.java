@@ -65,34 +65,5 @@ public class PointSET {
     }
 
     public static void main(String[] args) {
-        // just copy test from :
-        // https://github.com/GlaIZier/Java-Algorithms-Coursera-Course/blob/2db0d01cee3e34719736a9b60161290c42dd07c1/src/5%20Week%20Part%201%20KdTree/PointSET.java
-        PointSET pointSET = new PointSET();
-        System.out.println(pointSET.isEmpty());
-        for (int i = 0; i < 1000; i++) {
-            double x = Math.random();
-            double y = Math.random();
-            Point2D point2D = new Point2D(x, y);
-            pointSET.insert(point2D);
-            System.out.println(pointSET.contains(point2D) + " ");
-        }
-        System.out.println();
-
-        System.out.println("Size = " + pointSET.size());
-
-        System.out.println("Is contains (0.1, 0.1) = " + pointSET.contains(new Point2D(0.1, 0.1)));
-        System.out.println();
-
-        Point2D nearest = pointSET.nearest(new Point2D(0.1, 0.1));
-        System.out.println("Nearest point to (0.1, 0.1) is " + nearest.toString());
-        System.out.println();
-
-        RectHV rangeRect = new RectHV(0.45, 0.45, 0.55, 0.55);
-        for (Point2D inRangePoint : pointSET.range(rangeRect)) {
-            System.out.println(inRangePoint.toString());
-        }
-
-        pointSET.draw();
-
     }
 }
