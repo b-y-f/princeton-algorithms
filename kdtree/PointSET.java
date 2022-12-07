@@ -10,7 +10,6 @@ public class PointSET {
     public PointSET()
     // construct an empty set of points
     {
-
     }
 
     public boolean isEmpty()
@@ -56,6 +55,8 @@ public class PointSET {
     }
 
     public static void main(String[] args) {
+        // just copy test from :
+        // https://github.com/GlaIZier/Java-Algorithms-Coursera-Course/blob/2db0d01cee3e34719736a9b60161290c42dd07c1/src/5%20Week%20Part%201%20KdTree/PointSET.java
         PointSET pointSET = new PointSET();
         System.out.println(pointSET.isEmpty());
         for (int i = 0; i < 1000; i++) {
