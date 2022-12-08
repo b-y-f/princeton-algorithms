@@ -83,8 +83,10 @@ public class PointSET {
         Point2D nearest = null;
         double closetDist = Double.POSITIVE_INFINITY;
         for (Point2D point : points) {
-            if (p.distanceTo(point) < closetDist)
+            if (p.distanceTo(point) < closetDist) {
                 nearest = point;
+                closetDist = p.distanceTo(point);
+            }
         }
         return nearest;
     }
