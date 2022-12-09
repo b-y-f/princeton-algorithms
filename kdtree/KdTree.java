@@ -5,20 +5,13 @@
 
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
+import edu.princeton.cs.algs4.Stack;
 
 public class KdTree {
 
     private KDNode root;
+    private Stack<Point2D> list;
 
-    public static void main(String[] args) {
-        KdTree t = new KdTree();
-        for (int i = 0; i < 100; i++) {
-            double x = Math.random();
-            double y = Math.random();
-            t.insert(new Point2D(x, y));
-        }
-        System.out.println("done");
-    }
 
     public KdTree() {
     }
@@ -54,6 +47,19 @@ public class KdTree {
     }
 
     public void draw() {
+        list = new Stack<>();
+        inorderRecur(root);
+        for (Point2D p : list) {
+            p.draw();
+        }
+    }
+
+    private void inorderRecur(KDNode node) {
+        if (node != null) {
+            list.push(node.point);
+            inorderRecur(node.left);
+            inorderRecur(node.right);
+        }
     }
 
     public Point2D nearest(Point2D query) {
@@ -71,7 +77,7 @@ public class KdTree {
             double y = Math.random();
             t.insert(new Point2D(x, y));
         }
-        System.out.println("done");
+        t.draw();
     }
 
     private class KDNode {
@@ -81,6 +87,5 @@ public class KdTree {
         private KDNode(Point2D p) {
             point = p;
         }
-
     }
 }
