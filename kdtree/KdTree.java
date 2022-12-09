@@ -3,15 +3,14 @@
  *  Date: 6/12/22
  **************************************************************************** */
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
-import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class KdTree {
 
     private KDNode root;
-    private Stack<Point2D> list;
-
 
     public KdTree() {
     }
@@ -25,13 +24,15 @@ public class KdTree {
 
     private KDNode insertRecur(Point2D p, KDNode node, int level) {
         if (node == null) {
-            node = new KDNode(p);
+            node = new KDNode(p, 1);
         }
         else if (getCutdim(p, level) < getCutdim(node.point, level)) {
             node.left = insertRecur(p, node.left, level + 1);
+            node.left.level = level + 1;
         }
         else {
             node.right = insertRecur(p, node.right, level + 1);
+            node.right.level = level + 1;
         }
         return node;
     }
@@ -47,20 +48,49 @@ public class KdTree {
     }
 
     public void draw() {
-        list = new Stack<>();
-        inorderRecur(root);
-        for (Point2D p : list) {
-            p.draw();
+        inorderRecur(root, null, false);
+    }
+
+    private void inorderRecur(KDNode node, KDNode parent, boolean isSmall) {
+        if (node != null) {
+            drawPointAndLine(node, parent, isSmall);
+            inorderRecur(node.right, node, false);
+            inorderRecur(node.left, node, true);
         }
     }
 
-    private void inorderRecur(KDNode node) {
-        if (node != null) {
-            list.push(node.point);
-            inorderRecur(node.left);
-            inorderRecur(node.right);
+    private void drawPointAndLine(KDNode node, KDNode parent, boolean isSmall) {
+        int level = node.level;
+        boolean isX = level % 2 == 1;
+        Point2D p = node.point;
+        p.draw();
+
+        if (parent == null) {
+            StdDraw.setPenColor(StdDraw.RED);
+            StdDraw.line(p.x(), 0, p.x(), 1);
+            return;
+        }
+
+        if (isX) {
+            StdDraw.setPenColor(StdDraw.RED);
+            if (isSmall) {
+                StdDraw.line(p.x(), 0, p.x(), parent.point.y());
+            }
+            else {
+                StdDraw.line(p.x(), parent.point.y(), p.x(), 1);
+            }
+        }
+        else {
+            StdDraw.setPenColor(StdDraw.BLUE);
+            if (isSmall) {
+                StdDraw.line(0, p.y(), parent.point.x(), p.y());
+            }
+            else {
+                StdDraw.line(parent.point.x(), p.y(), 1, p.y());
+            }
         }
     }
+
 
     public Point2D nearest(Point2D query) {
         return query;
@@ -71,14 +101,29 @@ public class KdTree {
     }
 
     public static void main(String[] args) {
+        String filename = args[0];
+        In in = new In(filename);
+        KdTree kdtree = new KdTree();
+        while (!in.isEmpty()) {
+            double x = in.readDouble();
+            double y = in.readDouble();
+            Point2D p = new Point2D(x, y);
+            kdtree.insert(p);
+            StdDraw.clear();
+            kdtree.draw();
+            StdDraw.show();
+        }
+        System.out.println();
     }
 
     private class KDNode {
         private KDNode left, right;
         private Point2D point;
+        private int level;
 
-        private KDNode(Point2D p) {
+        private KDNode(Point2D p, int lvl) {
             point = p;
+            level = lvl;
         }
     }
 }
