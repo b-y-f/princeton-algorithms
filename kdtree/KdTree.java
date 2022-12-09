@@ -65,5 +65,22 @@ public class KdTree {
     }
 
     public static void main(String[] args) {
+        KdTree t = new KdTree();
+        for (int i = 0; i < 100; i++) {
+            double x = Math.random();
+            double y = Math.random();
+            t.insert(new Point2D(x, y));
+        }
+        System.out.println("done");
+    }
+
+    private class KDNode {
+        private KDNode left, right;
+        private Point2D point;
+
+        private KDNode(Point2D p) {
+            point = p;
+        }
+
     }
 }
