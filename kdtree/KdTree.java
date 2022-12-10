@@ -109,7 +109,7 @@ public class KdTree {
         }
     }
 
-    private class KDNode {
+    private static class KDNode {
         private KDNode left, right;
         private Point2D point;
         private int level;
