@@ -19,7 +19,7 @@ public class KdTree {
         if (p == null) {
             throw new IllegalArgumentException();
         }
-        root = insertRecur(p, root, 1, 0, 0, 0, 0);
+        root = insertRecur(p, root, 1, 1, 0, 0, 1);
     }
 
     private KDNode insertRecur(Point2D p, KDNode node, int level, double x0,
@@ -27,7 +27,7 @@ public class KdTree {
                                double y1) {
         // TODO add line segment to node
         if (node == null) {
-            node = new KDNode(p, 1, p.x(), 0, p.x(), 1);
+            node = new KDNode(p, level, p.x(), 0, p.x(), 1);
         }
         else if (getCutdim(p, level) < getCutdim(node.point, level)) {
             if (isVertical(level)) {
@@ -36,7 +36,6 @@ public class KdTree {
             else {
                 node.left = insertRecur(p, node.left, level + 1, p.y(), y0, x1, y1);
             }
-            node.left.level = level + 1;
         }
         else {
             if (isVertical(level)) {
@@ -45,18 +44,12 @@ public class KdTree {
             else {
                 node.right = insertRecur(p, node.right, level + 1, x0, p.y(), x1, y1);
             }
-            node.right.level = level + 1;
         }
         return node;
     }
 
     private double getCutdim(Point2D p, int level) {
-        if (isVertical(level)) {
-            return p.x();
-        }
-        else {
-            return p.y();
-        }
+        return isVertical(level) ? p.x() : p.y();
     }
 
     private boolean isVertical(int level) {
@@ -69,9 +62,8 @@ public class KdTree {
 
     private void inorderRecur(KDNode node) {
         if (node != null) {
-            boolean isVertical = isVertical(node.level);
-            Point2D p = node.point;
-            drawPointAndLine(p, node.x0, node.y0, node.x1, node.y1, isVertical);
+            drawPointAndLine(node.point, node.x0, node.y0, node.x1, node.y1,
+                             isVertical(node.level));
             inorderRecur(node.left);
             inorderRecur(node.right);
         }
