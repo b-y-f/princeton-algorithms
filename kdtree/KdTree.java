@@ -22,27 +22,35 @@ public class KdTree {
         root = insertRecur(p, root, 1, 1, 0, 0, 1);
     }
 
-    private KDNode insertRecur(Point2D p, KDNode node, int level, double x0,
-                               double y0, double x1,
-                               double y1) {
-        // TODO add line segment to node
+    private KDNode insertRecur(Point2D p, KDNode node, int level, double top,
+                               double bot, double left,
+                               double right) {
         if (node == null) {
-            node = new KDNode(p, level, p.x(), 0, p.x(), 1);
+            if (isVertical(level)) {
+                node = new KDNode(p, level, p.x(), bot, p.x(), top);
+            }
+            else {
+                node = new KDNode(p, level, left, p.y(), right, p.y());
+            }
         }
         else if (getCutdim(p, level) < getCutdim(node.point, level)) {
             if (isVertical(level)) {
-                node.left = insertRecur(p, node.left, level + 1, x0, y0, x1, p.x());
+                node.left = insertRecur(p, node.left, level + 1, top, bot, left, node.point.x()
+                );
             }
             else {
-                node.left = insertRecur(p, node.left, level + 1, p.y(), y0, x1, y1);
+                node.left = insertRecur(p, node.left, level + 1, node.point.y(), bot, left, right
+                );
             }
         }
         else {
             if (isVertical(level)) {
-                node.right = insertRecur(p, node.right, level + 1, x0, y0, p.x(), y1);
+                node.right = insertRecur(p, node.right, level + 1, top, bot, node.point.x(), right
+                );
             }
             else {
-                node.right = insertRecur(p, node.right, level + 1, x0, p.y(), x1, y1);
+                node.right = insertRecur(p, node.right, level + 1, top, node.point.y(), left, right
+                );
             }
         }
         return node;
