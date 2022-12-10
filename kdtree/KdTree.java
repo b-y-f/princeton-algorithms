@@ -19,27 +19,39 @@ public class KdTree {
         if (p == null) {
             throw new IllegalArgumentException();
         }
-        root = insertRecur(p, root, 1);
+        root = insertRecur(p, root, 1, 0, 0, 0, 0);
     }
 
-    private KDNode insertRecur(Point2D p, KDNode node, int level) {
+    private KDNode insertRecur(Point2D p, KDNode node, int level, double x0,
+                               double y0, double x1,
+                               double y1) {
+        // TODO add line segment to node
         if (node == null) {
-            node = new KDNode(p, 1);
+            node = new KDNode(p, 1, p.x(), 0, p.x(), 1);
         }
         else if (getCutdim(p, level) < getCutdim(node.point, level)) {
-            node.left = insertRecur(p, node.left, level + 1);
+            if (isVertical(level)) {
+                node.left = insertRecur(p, node.left, level + 1, x0, y0, x1, p.x());
+            }
+            else {
+                node.left = insertRecur(p, node.left, level + 1, p.y(), y0, x1, y1);
+            }
             node.left.level = level + 1;
         }
         else {
-            node.right = insertRecur(p, node.right, level + 1);
+            if (isVertical(level)) {
+                node.right = insertRecur(p, node.right, level + 1, x0, y0, p.x(), y1);
+            }
+            else {
+                node.right = insertRecur(p, node.right, level + 1, x0, p.y(), x1, y1);
+            }
             node.right.level = level + 1;
         }
         return node;
     }
 
     private double getCutdim(Point2D p, int level) {
-        boolean isX = level % 2 == 1;
-        if (isX) {
+        if (isVertical(level)) {
             return p.x();
         }
         else {
@@ -47,27 +59,41 @@ public class KdTree {
         }
     }
 
-    public void draw() {
-        inorderRecur(root, 1, 0, 0, 1);
+    private boolean isVertical(int level) {
+        return level % 2 == 1;
     }
 
-    private void inorderRecur(KDNode node, double top, double bot, double left,
-                              double right) {
+    public void draw() {
+        inorderRecur(root);
+    }
+
+    private void inorderRecur(KDNode node) {
         if (node != null) {
-            boolean isVertical = node.level % 2 == 1;
+            boolean isVertical = isVertical(node.level);
             Point2D p = node.point;
-            if (isVertical) {
-                drawPointAndLine(p, p.x(), bot, p.x(), top, true);
-                inorderRecur(node.left, top, bot, left, p.x());
-                inorderRecur(node.right, top, bot, p.x(), right);
-            }
-            else {
-                drawPointAndLine(p, left, p.y(), right, p.y(), false);
-                inorderRecur(node.left, p.y(), bot, left, right);
-                inorderRecur(node.right, top, p.y(), left, right);
-            }
+            drawPointAndLine(p, node.x0, node.y0, node.x1, node.y1, isVertical);
+            inorderRecur(node.left);
+            inorderRecur(node.right);
         }
     }
+
+    // private void inorderRecur(KDNode node, double top, double bot, double left,
+    //                           double right) {
+    //     if (node != null) {
+    //         boolean isVertical = isVertical(node.level);
+    //         Point2D p = node.point;
+    //         if (isVertical) {
+    //             drawPointAndLine(p, p.x(), bot, p.x(), top, true);
+    //             inorderRecur(node.left, top, bot, left, p.x());
+    //             inorderRecur(node.right, top, bot, p.x(), right);
+    //         }
+    //         else {
+    //             drawPointAndLine(p, left, p.y(), right, p.y(), false);
+    //             inorderRecur(node.left, p.y(), bot, left, right);
+    //             inorderRecur(node.right, top, p.y(), left, right);
+    //         }
+    //     }
+    // }
 
 
     private void drawPointAndLine(Point2D p, double x0, double y0, double x1, double y1,
@@ -90,9 +116,15 @@ public class KdTree {
         return query;
     }
 
-    public Point2D[] range(RectHV rect) {
-        return new Point2D[0];
+    public Iterable<Point2D> range(RectHV rect) {
+        return null;
     }
+
+    // private SET<Point2D> rangeQuery(RectHV rect, KDNode node) {
+    //     SET<Point2D> points = new SET<>();
+    //     if (node == null) return points;
+    //     return points;
+    // }
 
     public static void main(String[] args) {
         String filename = args[0];
@@ -113,10 +145,15 @@ public class KdTree {
         private KDNode left, right;
         private Point2D point;
         private int level;
+        private double x0, y0, x1, y1;
 
-        private KDNode(Point2D p, int lvl) {
+        private KDNode(Point2D p, int lvl, double x0, double y0, double x1, double y1) {
             point = p;
             level = lvl;
+            this.x0 = x0;
+            this.y0 = y0;
+            this.x1 = x1;
+            this.y1 = y1;
         }
     }
 }
