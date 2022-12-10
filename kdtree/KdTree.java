@@ -77,25 +77,6 @@ public class KdTree {
         }
     }
 
-    // private void inorderRecur(KDNode node, double top, double bot, double left,
-    //                           double right) {
-    //     if (node != null) {
-    //         boolean isVertical = isVertical(node.level);
-    //         Point2D p = node.point;
-    //         if (isVertical) {
-    //             drawPointAndLine(p, p.x(), bot, p.x(), top, true);
-    //             inorderRecur(node.left, top, bot, left, p.x());
-    //             inorderRecur(node.right, top, bot, p.x(), right);
-    //         }
-    //         else {
-    //             drawPointAndLine(p, left, p.y(), right, p.y(), false);
-    //             inorderRecur(node.left, p.y(), bot, left, right);
-    //             inorderRecur(node.right, top, p.y(), left, right);
-    //         }
-    //     }
-    // }
-
-
     private void drawPointAndLine(Point2D p, double x0, double y0, double x1, double y1,
                                   boolean isRed) {
         StdDraw.setPenRadius(0.01);
