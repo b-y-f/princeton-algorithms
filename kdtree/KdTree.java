@@ -48,47 +48,41 @@ public class KdTree {
     }
 
     public void draw() {
-        inorderRecur(root, null, false);
+        inorderRecur(root, 1, 0, 0, 1);
     }
 
-    private void inorderRecur(KDNode node, KDNode parent, boolean isSmall) {
+    private void inorderRecur(KDNode node, double top, double bot, double left,
+                              double right) {
         if (node != null) {
-            drawPointAndLine(node, parent, isSmall);
-            inorderRecur(node.right, node, false);
-            inorderRecur(node.left, node, true);
-        }
-    }
-
-    private void drawPointAndLine(KDNode node, KDNode parent, boolean isSmall) {
-        int level = node.level;
-        boolean isX = level % 2 == 1;
-        Point2D p = node.point;
-        p.draw();
-
-        if (parent == null) {
-            StdDraw.setPenColor(StdDraw.RED);
-            StdDraw.line(p.x(), 0, p.x(), 1);
-            return;
-        }
-
-        if (isX) {
-            StdDraw.setPenColor(StdDraw.RED);
-            if (isSmall) {
-                StdDraw.line(p.x(), 0, p.x(), parent.point.y());
+            boolean isVertical = node.level % 2 == 1;
+            Point2D p = node.point;
+            if (isVertical) {
+                drawPointAndLine(p, p.x(), bot, p.x(), top, true);
+                inorderRecur(node.left, top, bot, left, p.x());
+                inorderRecur(node.right, top, bot, p.x(), right);
             }
             else {
-                StdDraw.line(p.x(), parent.point.y(), p.x(), 1);
+                drawPointAndLine(p, left, p.y(), right, p.y(), false);
+                inorderRecur(node.left, p.y(), bot, left, right);
+                inorderRecur(node.right, top, p.y(), left, right);
             }
+        }
+    }
+
+
+    private void drawPointAndLine(Point2D p, double x0, double y0, double x1, double y1,
+                                  boolean isRed) {
+        StdDraw.setPenRadius(0.01);
+        StdDraw.setPenColor(StdDraw.BLACK);
+        p.draw();
+        StdDraw.setPenRadius();
+        if (isRed) {
+            StdDraw.setPenColor(StdDraw.RED);
         }
         else {
             StdDraw.setPenColor(StdDraw.BLUE);
-            if (isSmall) {
-                StdDraw.line(0, p.y(), parent.point.x(), p.y());
-            }
-            else {
-                StdDraw.line(parent.point.x(), p.y(), 1, p.y());
-            }
         }
+        StdDraw.line(x0, y0, x1, y1);
     }
 
 
@@ -113,7 +107,6 @@ public class KdTree {
             kdtree.draw();
             StdDraw.show();
         }
-        System.out.println();
     }
 
     private class KDNode {
