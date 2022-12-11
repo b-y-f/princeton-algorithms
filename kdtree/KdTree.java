@@ -95,7 +95,27 @@ public class KdTree {
 
 
     public Point2D nearest(Point2D query) {
-        return query;
+        if (query == null) {
+            throw new IllegalArgumentException();
+        }
+        return nearestRecur(root, query, null, 1);
+    }
+
+    private Point2D nearestRecur(KDNode t, Point2D queryPt, Point2D bestPt, double bestDist) {
+        if (t == null) return bestPt;
+        double dist = t.point.distanceTo(queryPt);
+        if (dist < bestDist) {
+            bestPt = t.point;
+            bestDist = dist;
+        }
+        if (t.left != null && (t.point.x() - queryPt.x()) < bestDist) {
+            bestPt = nearestRecur(t.left, queryPt, bestPt, bestDist);
+        }
+        if (t.right != null && (queryPt.x() - t.point.x()) < bestDist) {
+            bestPt = nearestRecur(t.right, queryPt, bestPt, bestDist);
+        }
+
+        return bestPt;
     }
 
     public Iterable<Point2D> range(RectHV rect) {
