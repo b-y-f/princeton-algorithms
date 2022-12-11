@@ -6,6 +6,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
+import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class KdTree {
@@ -98,14 +99,34 @@ public class KdTree {
     }
 
     public Iterable<Point2D> range(RectHV rect) {
-        return null;
+        if (rect == null) {
+            throw new IllegalArgumentException();
+        }
+        SET<Point2D> set = new SET<>();
+        rangeQueryRecur(rect, root, set);
+        return set;
     }
 
-    // private SET<Point2D> rangeQuery(RectHV rect, KDNode node) {
-    //     SET<Point2D> points = new SET<>();
-    //     if (node == null) return points;
-    //     return points;
-    // }
+    private void rangeQueryRecur(RectHV rect, KDNode node, SET<Point2D> s) {
+        if (node != null) {
+            if (isLineIntersect(rect, node)) {
+                if (rect.contains(node.point)) {
+                    s.add(node.point);
+                }
+            }
+            rangeQueryRecur(rect, node.left, s);
+            rangeQueryRecur(rect, node.right, s);
+        }
+    }
+
+    private boolean isLineIntersect(RectHV r, KDNode node) {
+        if (isVertical(node.level)) {
+            return node.x0 <= r.xmax() || node.x0 >= r.xmin();
+        }
+        else {
+            return node.y0 <= r.ymax() || node.y0 >= r.ymin();
+        }
+    }
 
     public static void main(String[] args) {
         String filename = args[0];
@@ -119,6 +140,13 @@ public class KdTree {
             StdDraw.clear();
             kdtree.draw();
             StdDraw.show();
+        }
+
+        StdDraw.setPenColor(StdDraw.GREEN);
+        RectHV rect = new RectHV(0.1, 0.1, 0.2, 0.2);
+        rect.draw();
+        for (Point2D p : kdtree.range(rect)) {
+            System.out.println(p);
         }
     }
 
