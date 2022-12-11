@@ -12,7 +12,6 @@ import edu.princeton.cs.algs4.StdDraw;
 public class KdTree {
 
     private KDNode root;
-    private int size;
 
     public KdTree() {
     }
@@ -37,7 +36,16 @@ public class KdTree {
     }
 
     public int size() {
-        return size;
+        return size(root);
+    }
+
+    private int size(KDNode t) {
+        if (t == null) {
+            return 0;
+        }
+        else {
+            return size(t.left) + 1 + size(t.right);
+        }
     }
 
     public void insert(Point2D p) {
@@ -51,7 +59,6 @@ public class KdTree {
                                double bot, double left,
                                double right) {
         if (node == null) {
-            size++;
             if (isVertical(level)) {
                 node = new KDNode(p, level, p.x(), bot, p.x(), top);
             }
@@ -182,24 +189,8 @@ public class KdTree {
             double y = in.readDouble();
             Point2D p = new Point2D(x, y);
             kdtree.insert(p);
-            StdDraw.clear();
-            kdtree.draw();
-            StdDraw.show();
         }
-
         System.out.println(kdtree.size());
-
-        StdDraw.setPenColor(StdDraw.GREEN);
-        StdDraw.setPenRadius(0.05);
-        Point2D testPoint = new Point2D(0.2, 0.2);
-        testPoint.draw();
-        // should be 0.144 0.179
-        System.out.println(kdtree.nearest(testPoint));
-
-        Point2D testContain = new Point2D(0.417, 0.362);
-        System.out.println(kdtree.contains(testContain));
-        Point2D testContain2 = new Point2D(0.417, 0.9);
-        System.out.println(kdtree.contains(testContain2));
     }
 
     private static class KDNode {
