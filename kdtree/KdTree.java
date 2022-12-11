@@ -143,11 +143,11 @@ public class KdTree {
         }
 
         StdDraw.setPenColor(StdDraw.GREEN);
-        RectHV rect = new RectHV(0.1, 0.1, 0.2, 0.2);
-        rect.draw();
-        for (Point2D p : kdtree.range(rect)) {
-            System.out.println(p);
-        }
+        StdDraw.setPenRadius(0.05);
+        Point2D testPoint = new Point2D(0.2, 0.2);
+        testPoint.draw();
+        // should be 0.144 0.179
+        System.out.println(kdtree.nearest(testPoint));
     }
 
     private static class KDNode {
