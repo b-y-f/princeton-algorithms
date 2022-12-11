@@ -12,8 +12,32 @@ import edu.princeton.cs.algs4.StdDraw;
 public class KdTree {
 
     private KDNode root;
+    private int size;
 
     public KdTree() {
+    }
+
+    public boolean contains(Point2D p) {
+        return contains(root, p);
+    }
+
+    private boolean contains(KDNode t, Point2D p) {
+        if (t == null) {
+            return false;
+        }
+        if (t.point.x() == p.x() && t.point.y() == p.y()) {
+            return true;
+        }
+        return contains(t.left, p) || contains(t.right, p);
+
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public int size() {
+        return size;
     }
 
     public void insert(Point2D p) {
@@ -27,6 +51,7 @@ public class KdTree {
                                double bot, double left,
                                double right) {
         if (node == null) {
+            size++;
             if (isVertical(level)) {
                 node = new KDNode(p, level, p.x(), bot, p.x(), top);
             }
@@ -162,12 +187,19 @@ public class KdTree {
             StdDraw.show();
         }
 
+        System.out.println(kdtree.size());
+
         StdDraw.setPenColor(StdDraw.GREEN);
         StdDraw.setPenRadius(0.05);
         Point2D testPoint = new Point2D(0.2, 0.2);
         testPoint.draw();
         // should be 0.144 0.179
         System.out.println(kdtree.nearest(testPoint));
+
+        Point2D testContain = new Point2D(0.417, 0.362);
+        System.out.println(kdtree.contains(testContain));
+        Point2D testContain2 = new Point2D(0.417, 0.9);
+        System.out.println(kdtree.contains(testContain2));
     }
 
     private static class KDNode {
