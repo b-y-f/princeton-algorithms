@@ -2,10 +2,13 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Outcast {
+    private final WordNet wn;
+
     /**
      * constructor takes a WordNet object
      */
     public Outcast(WordNet wordnet) {
+        wn = wordnet;
     }
 
     /**
@@ -15,7 +18,25 @@ public class Outcast {
      * @return
      */
     public String outcast(String[] nouns) {
-        return null;
+        int currMax = -1;
+        String outter = "";
+        int[] dist = new int[nouns.length];
+
+        // a,b,c,d,e
+        for (int i = 0; i < nouns.length; i++) {
+            String noun = nouns[i];
+            int currScore = 0;
+            for (String other : nouns) {
+                if (!noun.equals(other) && wn.isNoun(noun)) {
+                    currScore += wn.distance(noun, other);
+                }
+            }
+            if (currScore > currMax) {
+                currMax = currScore;
+                outter = nouns[i];
+            }
+        }
+        return outter;
     }
 
     public static void main(String[] args) {
