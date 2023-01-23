@@ -31,4 +31,17 @@ class SAPTest {
         assertEquals(2, ancestor);
     }
 
+    @Test
+    public void testSAPwithAmbiguousCannotReach() {
+        In in = new In("digraph-ambiguous-ancestor.txt");
+        Digraph G = new Digraph(in);
+        SAP sap = new SAP(G);
+        int v = 0;
+        int w = 9;
+        int length = sap.length(v, w);
+        int ancestor = sap.ancestor(v, w);
+        assertEquals(2, length);
+        assertEquals(9, ancestor);
+    }
+
 }
