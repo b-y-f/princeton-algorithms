@@ -16,6 +16,11 @@ public class WordNet {
     public WordNet(String synsets, String hypernyms) {
         In inSynsets = new In(synsets);
         In inHypers = new In(hypernyms);
+        createNouns(inSynsets);
+        createDigraph(inHypers);
+    }
+
+    private void createNouns(In inSynsets) {
         nouns = new HashMap<>();
         for (String s : inSynsets.readAllLines()) {
             String[] splitted = s.split(",");
@@ -23,6 +28,9 @@ public class WordNet {
             String noun = splitted[1];
             nouns.put(id, noun);
         }
+    }
+
+    private void createDigraph(In inHypers) {
         String[] allHypers = inHypers.readAllLines();
         Digraph G = new Digraph(allHypers.length);
         for (String line : allHypers) {
@@ -36,7 +44,6 @@ public class WordNet {
                 int w = Integer.parseInt(items[1]);
                 G.addEdge(v, w);
             }
-
         }
     }
 
