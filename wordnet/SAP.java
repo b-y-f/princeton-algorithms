@@ -1,9 +1,11 @@
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class SAP {
+
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
@@ -11,6 +13,46 @@ public class SAP {
      * @param G
      */
     public SAP(Digraph G) {
+        if (G == null) {
+            throw new IllegalArgumentException();
+        }
+
+        int[] dist1 = test(G, 1);
+        System.out.println();
+        int[] dist2 = test(G, 6);
+
+        for (int i = dist1.length - 1; i >= 0; i--) {
+            if (dist2[i] != 0 && dist1[i] != 0) {
+                System.out.println("ancestor: " + i + ", dist: " + (dist2[i] + dist1[i]));
+                break;
+            }
+        }
+        System.out.println("ancestor: " + -1 + ", dist: " + -1);
+
+
+    }
+
+    private static int[] test(Digraph G, int init) {
+        int[] edgeTo = new int[G.V()];
+        int[] distTo = new int[G.V()];
+        boolean[] marked = new boolean[G.V()];
+        Queue<Integer> q = new Queue<>();
+
+        q.enqueue(init);
+        marked[init] = true;
+        while (!q.isEmpty()) {
+            int vec = q.dequeue();
+            for (int wi : G.adj(vec)) {
+                if (!marked[wi]) {
+                    q.enqueue(wi);
+                    marked[wi] = true;
+                    distTo[wi] = 1 + distTo[vec];
+                    edgeTo[wi] = vec;
+                }
+            }
+        }
+
+        return distTo;
     }
 
     /**
@@ -21,7 +63,7 @@ public class SAP {
      * @return
      */
     public int length(int v, int w) {
-        return v;
+        return 0;
     }
 
     /**
