@@ -9,6 +9,8 @@ public class WordNet {
 
     private final SAP sap;
     private final Map<Integer, String[]> nouns;
+    private int ancester;
+    private int bestDist;
 
     /**
      * constructor takes the name of the two input files
@@ -75,7 +77,13 @@ public class WordNet {
      * @return if this is noun from synsets
      */
     public boolean isNoun(String word) {
-
+        for (String[] words : nouns.values()) {
+            for (String s : words) {
+                if (word.equals(s)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -88,7 +96,11 @@ public class WordNet {
      * @return shortest distance with common ancestor
      */
     public int distance(String nounA, String nounB) {
+        helper(nounA, nounB);
+        return bestDist;
+    }
 
+    private void helper(String nounA, String nounB) {
         Stack<Integer> vs = new Stack<>();
         Stack<Integer> ws = new Stack<>();
         for (Map.Entry<Integer, String[]> entry : nouns.entrySet()) {
@@ -101,14 +113,17 @@ public class WordNet {
                 }
             }
         }
+
+        bestDist = Integer.MAX_VALUE;
         for (int v : vs) {
             for (int w : ws) {
-                System.out.print(v + "\t" + w + "\t" + sap.length(v, w) + "\t");
-                System.out.println(sap.ancestor(v, w));
+                int currDist = sap.length(v, w);
+                if (currDist < bestDist) {
+                    bestDist = currDist;
+                    ancester = sap.ancestor(v, w);
+                }
             }
         }
-        return 0;
-
     }
 
     /**
@@ -120,11 +135,12 @@ public class WordNet {
      * @return
      */
     public String sap(String nounA, String nounB) {
-        return "";
+        helper(nounA, nounB);
+        return String.join(" ", nouns.get(ancester));
     }
 
     public static void main(String[] args) {
         WordNet wordnet = new WordNet(args[0], args[1]);
-        wordnet.distance("punk", "waif");
+        System.out.println(wordnet.sap("punk", "waif"));
     }
 }
