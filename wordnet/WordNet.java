@@ -1,11 +1,14 @@
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stack;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class WordNet {
 
-    private HashMap<Integer, String> nouns;
+    private final SAP sap;
+    private final Map<Integer, String[]> nouns;
 
     /**
      * constructor takes the name of the two input files
@@ -16,23 +19,25 @@ public class WordNet {
     public WordNet(String synsets, String hypernyms) {
         In inSynsets = new In(synsets);
         In inHypers = new In(hypernyms);
-        createNouns(inSynsets);
-        createDigraph(inHypers);
+
+        sap = new SAP(createDigraph(inHypers));
+        nouns = createNouns(inSynsets);
     }
 
-    private void createNouns(In inSynsets) {
-        nouns = new HashMap<>();
+    private Map<Integer, String[]> createNouns(In inSynsets) {
+        Map<Integer, String[]> nounsDict = new HashMap<>();
         for (String s : inSynsets.readAllLines()) {
             String[] splitted = s.split(",");
             int id = Integer.parseInt(splitted[0]);
-            String noun = splitted[1];
-            nouns.put(id, noun);
+            String[] splittedNouns = splitted[1].split(" ");
+            nounsDict.put(id, splittedNouns);
         }
+        return nounsDict;
     }
 
-    private void createDigraph(In inHypers) {
+    private Digraph createDigraph(In inHypers) {
         String[] allHypers = inHypers.readAllLines();
-        Digraph G = new Digraph(allHypers.length);
+        Digraph g = new Digraph(allHypers.length);
         for (String line : allHypers) {
             String[] items = line.split(",");
             int length = items.length;
@@ -42,9 +47,10 @@ public class WordNet {
             }
             for (int i = 0; i < length - 1; i++) {
                 int w = Integer.parseInt(items[1]);
-                G.addEdge(v, w);
+                g.addEdge(v, w);
             }
         }
+        return g;
     }
 
     /**
@@ -53,7 +59,13 @@ public class WordNet {
      * @return
      */
     public Iterable<String> nouns() {
-        return nouns.values();
+        Stack<String> res = new Stack<>();
+        for (String[] words : nouns.values()) {
+            for (String n : words) {
+                res.push(n);
+            }
+        }
+        return res;
     }
 
     /**
@@ -63,23 +75,40 @@ public class WordNet {
      * @return if this is noun from synsets
      */
     public boolean isNoun(String word) {
-        for (String w : nouns.values()) {
-            if (word.equals(w)) {
-                return true;
-            }
-        }
+
         return false;
     }
 
     /**
-     * distance between nounA and nounB (defined below)
+     * distance between nounA and nounB (defined below), use nounA's id and noun B's
+     * ID to find the length by class SAP.
      *
      * @param nounA
      * @param nounB
-     * @return
+     * @return shortest distance with common ancestor
      */
     public int distance(String nounA, String nounB) {
+
+        Stack<Integer> vs = new Stack<>();
+        Stack<Integer> ws = new Stack<>();
+        for (Map.Entry<Integer, String[]> entry : nouns.entrySet()) {
+            for (String word : entry.getValue()) {
+                if (word.equals(nounA)) {
+                    vs.push(entry.getKey());
+                }
+                if (word.equals(nounB)) {
+                    ws.push(entry.getKey());
+                }
+            }
+        }
+        for (int v : vs) {
+            for (int w : ws) {
+                System.out.print(v + "\t" + w + "\t" + sap.length(v, w) + "\t");
+                System.out.println(sap.ancestor(v, w));
+            }
+        }
         return 0;
+
     }
 
     /**
@@ -96,6 +125,6 @@ public class WordNet {
 
     public static void main(String[] args) {
         WordNet wordnet = new WordNet(args[0], args[1]);
-        System.out.println(wordnet);
+        wordnet.distance("punk", "waif");
     }
 }
