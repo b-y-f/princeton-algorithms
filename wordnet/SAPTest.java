@@ -44,4 +44,30 @@ class SAPTest {
         assertEquals(9, ancestor);
     }
 
+    @Test
+    public void circleSAPDigraph2a() {
+        In in = new In("digraph2.txt");
+        Digraph G = new Digraph(in);
+        SAP sap = new SAP(G);
+        int v = 2;
+        int w = 3;
+        int length = sap.length(v, w);
+        int ancestor = sap.ancestor(v, w);
+        assertEquals(1, length);
+        assertEquals(3, ancestor);
+    }
+
+    @Test
+    public void circleSAPDigraph2b() {
+        In in = new In("digraph2.txt");
+        Digraph G = new Digraph(in);
+        SAP sap = new SAP(G);
+        int v = 1;
+        int w = 5;
+        int length = sap.length(v, w);
+        int ancestor = sap.ancestor(v, w);
+        assertEquals(2, length);
+        assertEquals(0, ancestor);
+    }
+
 }
