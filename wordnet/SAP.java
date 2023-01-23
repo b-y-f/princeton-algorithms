@@ -7,6 +7,10 @@ import edu.princeton.cs.algs4.StdOut;
 public class SAP {
 
 
+    private final Digraph G;
+    private int distance;
+    private int ancestor;
+
     /**
      * constructor takes a digraph (not necessarily a DAG)
      *
@@ -16,42 +20,26 @@ public class SAP {
         if (G == null) {
             throw new IllegalArgumentException();
         }
-
-        int[] dist1 = test(G, 1);
-        System.out.println();
-        int[] dist2 = test(G, 6);
-
-        for (int i = dist1.length - 1; i >= 0; i--) {
-            if (dist2[i] != 0 && dist1[i] != 0) {
-                System.out.println("ancestor: " + i + ", dist: " + (dist2[i] + dist1[i]));
-                break;
-            }
-        }
-        System.out.println("ancestor: " + -1 + ", dist: " + -1);
-
-
+        this.G = G;
     }
 
-    private static int[] test(Digraph G, int init) {
-        int[] edgeTo = new int[G.V()];
-        int[] distTo = new int[G.V()];
-        boolean[] marked = new boolean[G.V()];
+    private int[] helper(Digraph g, int fromVertex) {
+        int[] distTo = new int[g.V()];
+        boolean[] marked = new boolean[g.V()];
         Queue<Integer> q = new Queue<>();
 
-        q.enqueue(init);
-        marked[init] = true;
+        q.enqueue(fromVertex);
+        marked[fromVertex] = true;
         while (!q.isEmpty()) {
-            int vec = q.dequeue();
-            for (int wi : G.adj(vec)) {
-                if (!marked[wi]) {
-                    q.enqueue(wi);
-                    marked[wi] = true;
-                    distTo[wi] = 1 + distTo[vec];
-                    edgeTo[wi] = vec;
+            int v = q.dequeue();
+            for (int w : g.adj(v)) {
+                if (!marked[w]) {
+                    q.enqueue(w);
+                    marked[w] = true;
+                    distTo[w] = 1 + distTo[v];
                 }
             }
         }
-
         return distTo;
     }
 
@@ -60,10 +48,24 @@ public class SAP {
      *
      * @param v
      * @param w
-     * @return
      */
     public int length(int v, int w) {
-        return 0;
+        findAncestorAndDist(v, w);
+        return distance;
+    }
+
+    private void findAncestorAndDist(int v, int w) {
+        int[] dist1 = helper(G, v);
+        int[] dist2 = helper(G, w);
+        for (int i = dist1.length - 1; i >= 0; i--) {
+            if (dist2[i] != 0 && dist1[i] != 0) {
+                distance = dist1[i] + dist2[i];
+                ancestor = i;
+                return;
+            }
+        }
+        distance = -1;
+        ancestor = -1;
     }
 
     /**
@@ -75,7 +77,8 @@ public class SAP {
      * @return
      */
     public int ancestor(int v, int w) {
-        return v;
+        findAncestorAndDist(v, w);
+        return ancestor;
     }
 
     /**
