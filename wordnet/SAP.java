@@ -1,15 +1,13 @@
+import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 public class SAP {
 
 
     private final Digraph G;
-    private int distance;
+    private int distance = Integer.MAX_VALUE;
     private int ancestor;
+    private boolean alreadyExec;
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
@@ -17,31 +15,9 @@ public class SAP {
      * @param G
      */
     public SAP(Digraph G) {
-        if (G == null) {
-            throw new IllegalArgumentException();
-        }
         this.G = G;
     }
 
-    private int[] helper(Digraph g, int fromVertex) {
-        int[] distTo = new int[g.V()];
-        boolean[] marked = new boolean[g.V()];
-        Queue<Integer> q = new Queue<>();
-
-        q.enqueue(fromVertex);
-        marked[fromVertex] = true;
-        while (!q.isEmpty()) {
-            int v = q.dequeue();
-            for (int w : g.adj(v)) {
-                if (!marked[w]) {
-                    q.enqueue(w);
-                    marked[w] = true;
-                    distTo[w] = 1 + distTo[v];
-                }
-            }
-        }
-        return distTo;
-    }
 
     /**
      * length of shortest ancestral path between v and w; -1 if no such path
@@ -50,22 +26,30 @@ public class SAP {
      * @param w
      */
     public int length(int v, int w) {
-        findAncestorAndDist(v, w);
+        if (!alreadyExec) {
+            findAncestorAndDist(v, w);
+        }
         return distance;
+
     }
 
     private void findAncestorAndDist(int v, int w) {
-        int[] dist1 = helper(G, v);
-        int[] dist2 = helper(G, w);
-        for (int i = dist1.length - 1; i >= 0; i--) {
-            if (dist2[i] != 0 && dist1[i] != 0) {
-                distance = dist1[i] + dist2[i];
-                ancestor = i;
-                return;
+        alreadyExec = true;
+        BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
+        BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
+
+        for (int i = 0; i < G.V(); i++) {
+            if (bfsV.hasPathTo(i) && bfsW.hasPathTo(i)) {
+                int currDist = bfsV.distTo(i) + bfsW.distTo(i);
+                if (currDist < distance) {
+                    distance = currDist;
+                    ancestor = i;
+                }
             }
         }
-        distance = -1;
-        ancestor = -1;
+        if (ancestor == -1) {
+            distance = -1;
+        }
     }
 
     /**
@@ -77,7 +61,9 @@ public class SAP {
      * @return
      */
     public int ancestor(int v, int w) {
-        findAncestorAndDist(v, w);
+        if (!alreadyExec) {
+            findAncestorAndDist(v, w);
+        }
         return ancestor;
     }
 
@@ -110,15 +96,5 @@ public class SAP {
      * @param args
      */
     public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digraph G = new Digraph(in);
-        SAP sap = new SAP(G);
-        while (!StdIn.isEmpty()) {
-            int v = StdIn.readInt();
-            int w = StdIn.readInt();
-            int length = sap.length(v, w);
-            int ancestor = sap.ancestor(v, w);
-            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
-        }
     }
 }
