@@ -2,7 +2,9 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stack;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class WordNet {
@@ -60,16 +62,14 @@ public class WordNet {
     }
 
     /**
-     * returns all WordNet nouns
+     * returns all WordNet nouns without repeat
      *
      * @return
      */
     public Iterable<String> nouns() {
-        Stack<String> res = new Stack<>();
+        HashSet<String> res = new HashSet<>();
         for (String[] words : nouns.values()) {
-            for (String n : words) {
-                res.push(n);
-            }
+            Collections.addAll(res, words);
         }
         return res;
     }
