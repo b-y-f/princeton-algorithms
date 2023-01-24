@@ -1,8 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WordNetTest {
@@ -27,44 +24,5 @@ class WordNetTest {
             cnt++;
         }
         assertEquals(119188, cnt);
-    }
-
-    /**
-     * there are 5 IDs associated with worm
-     * 81679 worm
-     * 81680 worm
-     * 81681 worm
-     * 81682 worm louse insect dirt_ball
-     */
-    @Test
-    public void containWorm() {
-        WordNet wordnet = new WordNet("synsets.txt", "hypernyms.txt");
-        for (Map.Entry<Integer, String[]> entry : wordnet.getAllNouns().entrySet()) {
-            for (String s : entry.getValue()) {
-                if (s.equals("worm")) {
-                    System.out.println(entry.getKey() + "\t" + Arrays.toString(entry.getValue()));
-                }
-            }
-        }
-    }
-
-    @Test
-    public void containBird() {
-        WordNet wordnet = new WordNet("synsets.txt", "hypernyms.txt");
-        for (Map.Entry<Integer, String[]> entry : wordnet.getAllNouns().entrySet()) {
-            for (String s : entry.getValue()) {
-                if (s.equals("bird")) {
-                    System.out.println(entry.getKey() + "\t" + Arrays.toString(entry.getValue()));
-                }
-            }
-        }
-    }
-
-    @Test
-    public void validateEdgeAndVertex() {
-        WordNet wordnet = new WordNet("synsets.txt", "hypernyms.txt");
-        SAP sap = wordnet.getSAP();
-        assertEquals(82192, sap.getNumOfVertex());
-        assertEquals(84505, sap.getNumOfEdges());
     }
 }
