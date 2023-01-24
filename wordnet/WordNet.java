@@ -75,6 +75,9 @@ public class WordNet {
      * @return if this is noun from synsets
      */
     public boolean isNoun(String word) {
+        if (word == null) {
+            throw new IllegalArgumentException();
+        }
         for (String[] words : nouns.values()) {
             for (String s : words) {
                 if (word.equals(s)) {
@@ -94,6 +97,9 @@ public class WordNet {
      * @return shortest distance with common ancestor
      */
     public int distance(String nounA, String nounB) {
+        if (!isNoun(nounA) || !isNoun(nounB)) {
+            throw new IllegalArgumentException();
+        }
         return helper(nounA, nounB)[0];
     }
 
