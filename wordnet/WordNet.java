@@ -26,6 +26,10 @@ public class WordNet {
         nouns = createNouns(inSynsets);
     }
 
+    public SAP getSAP() {
+        return sap;
+    }
+
     private Map<Integer, String[]> createNouns(In inSynsets) {
         Map<Integer, String[]> nounsDict = new HashMap<>();
         for (String s : inSynsets.readAllLines()) {
@@ -100,6 +104,12 @@ public class WordNet {
         return bestDist;
     }
 
+    /**
+     * this function help to find ids from nounA and nounB
+     *
+     * @param nounA
+     * @param nounB
+     */
     private void helper(String nounA, String nounB) {
         Stack<Integer> vs = new Stack<>();
         Stack<Integer> ws = new Stack<>();
