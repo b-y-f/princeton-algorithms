@@ -20,7 +20,6 @@ public class Outcast {
     public String outcast(String[] nouns) {
         int currMax = -1;
         String outter = "";
-        int[] dist = new int[nouns.length];
 
         // a,b,c,d,e
         for (int i = 0; i < nouns.length; i++) {

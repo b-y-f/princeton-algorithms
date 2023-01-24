@@ -12,7 +12,7 @@ public class SAP {
      * @param G
      */
     public SAP(Digraph G) {
-        this.G = G;
+        this.G = new Digraph(G);
     }
 
 
@@ -25,7 +25,7 @@ public class SAP {
     public int length(int v, int w) {
         return findAncestorAndDist(v, w)[0];
     }
-    
+
     private int[] findAncestorAndDist(int v, int w) {
         BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
         BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);

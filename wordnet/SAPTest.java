@@ -70,4 +70,17 @@ class SAPTest {
         assertEquals(0, ancestor);
     }
 
+    @Test
+    public void checkWhetherSAPIsImmutable() {
+        In in = new In("digraph1.txt");
+        Digraph G = new Digraph(in);
+        int v = 0;
+        int w = 3;
+
+        SAP sap = new SAP(G);
+        assertEquals(2, sap.length(v, w));
+        G.addEdge(0, 3);
+        assertEquals(2, sap.length(v, w));
+    }
+
 }
