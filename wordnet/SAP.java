@@ -68,7 +68,22 @@ public class SAP {
      * @return
      */
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        return 0;
+        int shortest = Integer.MAX_VALUE;
+        int ancestor = -1;
+        validateVW(v, w);
+        for (int vv : v) {
+            for (int ww : w) {
+                int currLength = length(vv, ww);
+                if (currLength < shortest) {
+                    shortest = currLength;
+                    ancestor = ancestor(vv, ww);
+                }
+            }
+        }
+        if (ancestor == -1) {
+            shortest = -1;
+        }
+        return shortest;
     }
 
     /**
@@ -79,7 +94,36 @@ public class SAP {
      * @return
      */
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        return 0;
+        validateVW(v, w);
+        int shortest = Integer.MAX_VALUE;
+        int ancestor = -1;
+        validateVW(v, w);
+        for (int vv : v) {
+            for (int ww : w) {
+                int currLength = length(vv, ww);
+                if (currLength < shortest) {
+                    shortest = currLength;
+                    ancestor = ancestor(vv, ww);
+                }
+            }
+        }
+        return ancestor;
+    }
+
+    private void validateVW(Iterable<Integer> v, Iterable<Integer> w) {
+        iterValidate(v);
+        iterValidate(w);
+    }
+
+    private void iterValidate(Iterable<Integer> iter) {
+        if (iter == null) {
+            throw new IllegalArgumentException();
+        }
+        for (Integer item : iter) {
+            if (item == null || item < 0) {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     /**
