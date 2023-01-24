@@ -11,8 +11,6 @@ public class WordNet {
 
     private final SAP sap;
     private final Map<Integer, String[]> nouns;
-    private int ancester;
-    private int bestDist;
 
     /**
      * constructor takes the name of the two input files
@@ -30,6 +28,10 @@ public class WordNet {
 
     public SAP getSAP() {
         return sap;
+    }
+
+    public Map<Integer, String[]> getAllNouns() {
+        return nouns;
     }
 
     private Map<Integer, String[]> createNouns(In inSynsets) {
@@ -100,8 +102,7 @@ public class WordNet {
      * @return shortest distance with common ancestor
      */
     public int distance(String nounA, String nounB) {
-        helper(nounA, nounB);
-        return bestDist;
+        return helper(nounA, nounB)[0];
     }
 
     /**
@@ -109,8 +110,9 @@ public class WordNet {
      *
      * @param nounA
      * @param nounB
+     * @return
      */
-    private void helper(String nounA, String nounB) {
+    private int[] helper(String nounA, String nounB) {
         Stack<Integer> vs = new Stack<>();
         Stack<Integer> ws = new Stack<>();
         for (Map.Entry<Integer, String[]> entry : nouns.entrySet()) {
@@ -124,7 +126,8 @@ public class WordNet {
             }
         }
 
-        bestDist = Integer.MAX_VALUE;
+        int bestDist = Integer.MAX_VALUE;
+        int ancester = -1;
         for (int v : vs) {
             for (int w : ws) {
                 int currDist = sap.length(v, w);
@@ -134,6 +137,7 @@ public class WordNet {
                 }
             }
         }
+        return new int[] { bestDist, ancester };
     }
 
     /**
@@ -145,7 +149,7 @@ public class WordNet {
      * @return
      */
     public String sap(String nounA, String nounB) {
-        helper(nounA, nounB);
+        int ancester = helper(nounA, nounB)[1];
         return String.join(" ", nouns.get(ancester));
     }
 

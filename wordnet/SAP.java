@@ -5,8 +5,6 @@ public class SAP {
 
 
     private final Digraph G;
-    private int distance = Integer.MAX_VALUE;
-    private int ancestor;
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
@@ -25,8 +23,7 @@ public class SAP {
      * @param w
      */
     public int length(int v, int w) {
-        findAncestorAndDist(v, w);
-        return distance;
+        return findAncestorAndDist(v, w)[0];
     }
 
 
@@ -38,10 +35,12 @@ public class SAP {
         return G.E();
     }
 
-    private void findAncestorAndDist(int v, int w) {
+    private int[] findAncestorAndDist(int v, int w) {
         BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
         BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
 
+        int distance = Integer.MAX_VALUE;
+        int ancestor = -1;
         for (int i = 0; i < G.V(); i++) {
             if (bfsV.hasPathTo(i) && bfsW.hasPathTo(i)) {
                 int currDist = bfsV.distTo(i) + bfsW.distTo(i);
@@ -54,6 +53,7 @@ public class SAP {
         if (ancestor == -1) {
             distance = -1;
         }
+        return new int[] { distance, ancestor };
     }
 
     /**
@@ -65,8 +65,7 @@ public class SAP {
      * @return
      */
     public int ancestor(int v, int w) {
-        findAncestorAndDist(v, w);
-        return ancestor;
+        return findAncestorAndDist(v, w)[1];
     }
 
     /**
