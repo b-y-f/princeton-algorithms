@@ -26,14 +26,6 @@ public class WordNet {
         nouns = createNouns(inSynsets);
     }
 
-    public SAP getSAP() {
-        return sap;
-    }
-
-    public Map<Integer, String[]> getAllNouns() {
-        return nouns;
-    }
-
     private Map<Integer, String[]> createNouns(In inSynsets) {
         Map<Integer, String[]> nounsDict = new HashMap<>();
         for (String s : inSynsets.readAllLines()) {

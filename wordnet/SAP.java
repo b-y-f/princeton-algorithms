@@ -25,16 +25,7 @@ public class SAP {
     public int length(int v, int w) {
         return findAncestorAndDist(v, w)[0];
     }
-
-
-    public int getNumOfVertex() {
-        return G.V();
-    }
-
-    public int getNumOfEdges() {
-        return G.E();
-    }
-
+    
     private int[] findAncestorAndDist(int v, int w) {
         BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
         BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
