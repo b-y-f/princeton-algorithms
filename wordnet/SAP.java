@@ -125,12 +125,4 @@ public class SAP {
             }
         }
     }
-
-    /**
-     * do unit testing of this class
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-    }
 }
