@@ -83,7 +83,7 @@ class WordNetTest {
 
     @Test
     public void distanceWithRandPairsB() {
-        WordNet wordnet = new WordNet("synsets500-subgraph..txt", "hypernyms500-subgraph.txt");
+        WordNet wordnet = new WordNet("synsets500-subgraph.txt", "hypernyms500-subgraph.txt");
         String nounA = "rennin";
         String nounB = "linalool";
         assertEquals(7, wordnet.distance(nounA, nounB));
@@ -114,6 +114,14 @@ class WordNetTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             WordNet wordnet = new WordNet("synsets6.txt", "hypernyms6InvalidCycle.txt");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            WordNet wordnet = new WordNet("synsets6.txt", "hypernyms3InvalidTwoRoots.txt");
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            WordNet wordnet = new WordNet("synsets6.txt", "hypernyms6InvalidTwoRoots.txt");
         });
     }
 
