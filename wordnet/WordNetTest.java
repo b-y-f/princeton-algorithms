@@ -121,7 +121,7 @@ class WordNetTest {
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            WordNet wordnet = new WordNet("synsets6.txt", "hypernyms6InvalidTwoRoots.txt");
+            WordNet wordnet = new WordNet("synsets6.txt", "hypernyms6InvalidCycle.txt");
         });
     }
 

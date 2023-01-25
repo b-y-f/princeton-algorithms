@@ -16,8 +16,8 @@ public class WordNet {
     /**
      * constructor takes the name of the two input files
      *
-     * @param synsets
-     * @param hypernyms
+     * @param synsets   input file
+     * @param hypernyms input file path
      */
     public WordNet(String synsets, String hypernyms) {
         In inSynsets = new In(synsets);
@@ -35,7 +35,7 @@ public class WordNet {
             String[] splitted = s.split(",");
             int id = Integer.parseInt(splitted[0]);
             String synets = splitted[1];
-            String[] splittedNouns = splitted[1].split(" ");
+            String[] splittedNouns = synets.split(" ");
             idToSynetString.put(id, synets);
             for (String n : splittedNouns) {
                 if (!nouns.contains(n)) {
@@ -56,8 +56,8 @@ public class WordNet {
         for (String line : allHypers) {
             String[] items = line.split(",");
             int v = Integer.parseInt(items[0]);
-            for (int i = 0; i < items.length - 1; i++) {
-                int w = Integer.parseInt(items[1]);
+            for (int i = 1; i < items.length; i++) {
+                int w = Integer.parseInt(items[i]);
                 g.addEdge(v, w);
             }
         }
@@ -71,7 +71,7 @@ public class WordNet {
     /**
      * returns all WordNet nouns without repeat
      *
-     * @return
+     * @return nouns table
      */
     public Iterable<String> nouns() {
         return nouns;
@@ -80,7 +80,7 @@ public class WordNet {
     /**
      * is the word a WordNet noun?
      *
-     * @param word
+     * @param word input word
      * @return if this is noun from synsets
      */
     public boolean isNoun(String word) {
