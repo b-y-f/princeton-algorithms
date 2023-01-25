@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.DirectedCycle;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Stack;
 
@@ -51,6 +52,10 @@ public class WordNet {
                 int w = Integer.parseInt(items[1]);
                 g.addEdge(v, w);
             }
+        }
+        DirectedCycle circle = new DirectedCycle(g);
+        if (circle.hasCycle()) {
+            throw new IllegalArgumentException();
         }
         return g;
     }
