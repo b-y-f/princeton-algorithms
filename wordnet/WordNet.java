@@ -37,15 +37,19 @@ public class WordNet {
             String synets = splitted[1];
             String[] splittedNouns = synets.split(" ");
             idToSynetString.put(id, synets);
-            for (String n : splittedNouns) {
-                if (!nouns.contains(n)) {
-                    Bag<Integer> ids = new Bag<>();
-                    ids.add(id);
-                    nouns.put(n, ids);
-                }
-                else {
-                    nouns.get(n).add(id);
-                }
+            addNounToId(id, splittedNouns);
+        }
+    }
+
+    private void addNounToId(int id, String[] splittedNouns) {
+        for (String n : splittedNouns) {
+            if (!nouns.contains(n)) {
+                Bag<Integer> ids = new Bag<>();
+                ids.add(id);
+                nouns.put(n, ids);
+            }
+            else {
+                nouns.get(n).add(id);
             }
         }
     }
@@ -53,6 +57,7 @@ public class WordNet {
     private Digraph createDigraph(In inHypers) {
         String[] allHypers = inHypers.readAllLines();
         Digraph g = new Digraph(allHypers.length);
+        checkIfGraphCircle(g);
         for (String line : allHypers) {
             String[] items = line.split(",");
             int v = Integer.parseInt(items[0]);
@@ -61,11 +66,15 @@ public class WordNet {
                 g.addEdge(v, w);
             }
         }
+
+        return g;
+    }
+
+    private void checkIfGraphCircle(Digraph g) {
         DirectedCycle circle = new DirectedCycle(g);
         if (circle.hasCycle()) {
             throw new IllegalArgumentException();
         }
-        return g;
     }
 
     /**
