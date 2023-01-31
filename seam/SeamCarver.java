@@ -40,11 +40,11 @@ public class SeamCarver {
         }
     }
 
-    private static double getDelta(Color left, Color right) {
-        double deltaX = Math.pow(right.getRed() - left.getRed(), 2) + Math.pow(
-                right.getGreen() - left.getGreen(), 2) + Math.pow(
-                right.getBlue() - left.getBlue(), 2);
-        return deltaX;
+    private double getDelta(Color a, Color b) {
+        double delta = Math.pow(b.getRed() - a.getRed(), 2) + Math.pow(
+                b.getGreen() - a.getGreen(), 2) + Math.pow(
+                b.getBlue() - a.getBlue(), 2);
+        return delta;
     }
 
 
