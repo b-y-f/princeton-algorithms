@@ -25,7 +25,8 @@ class SeamCarverTest {
         SeamCarver sc = new SeamCarver(picture);
 
         int[] exp = new int[] { 4, 4, 3, 2, 2 };
-        assertArrayEquals(exp, sc.findVerticalSeam());
+        int[] vIndex = sc.findVerticalSeam();
+        assertArrayEquals(exp, vIndex);
     }
 
     @Test
@@ -34,7 +35,8 @@ class SeamCarverTest {
         SeamCarver sc = new SeamCarver(picture);
 
         int[] exp = new int[] { 2, 2, 1, 2, 1, 1 };
-        assertArrayEquals(exp, sc.findHorizontalSeam());
+        int[] hIndex = sc.findHorizontalSeam();
+        assertArrayEquals(exp, hIndex);
     }
 
 }
