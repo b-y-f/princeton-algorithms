@@ -95,25 +95,22 @@ public class SeamCarver {
         int[] res = new int[dp.length];
         res[0] = findMinIndex(dp[1]);
         for (int i = 1; i < res.length; i++) {
-            int last = res[i - 1];
-
+            int lastCol = res[i - 1];
             double left = Double.MAX_VALUE;
             double right = Double.MAX_VALUE;
-            if (last - 1 >= 0) {
-                left = dp[i][last - 1];
+            if (lastCol - 1 >= 0) {
+                left = dp[i][lastCol - 1];
             }
-            else if (last + 1 < dp[0].length) {
-                right = dp[i][last + 1];
+            if (lastCol + 1 < dp[0].length) {
+                right = dp[i][lastCol + 1];
             }
 
             if (i == res.length - 1) {
-                res[i] = last;
+                res[i] = lastCol;
             }
             else {
-                double[] nextEnergies = new double[] {
-                        left, dp[i][last], right
-                };
-                int currIndex = last + getDir(nextEnergies);
+                double[] nextEnergies = new double[] { left, dp[i][lastCol], right };
+                int currIndex = lastCol + getDir(nextEnergies);
                 res[i] = currIndex;
             }
 
