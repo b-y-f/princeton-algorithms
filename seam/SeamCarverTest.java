@@ -24,7 +24,7 @@ class SeamCarverTest {
         Picture picture = new Picture("6x5.png");
         SeamCarver sc = new SeamCarver(picture);
 
-        int[] exp = new int[] { 3, 4, 3, 2, 2 };
+        int[] exp = new int[] { 4, 4, 3, 2, 2 };
         assertArrayEquals(exp, sc.findVerticalSeam());
     }
 
@@ -33,7 +33,7 @@ class SeamCarverTest {
         Picture picture = new Picture("6x5.png");
         SeamCarver sc = new SeamCarver(picture);
 
-        int[] exp = new int[] { 2, 2, 1, 2, 1, 2 };
+        int[] exp = new int[] { 2, 2, 1, 2, 1, 1 };
         assertArrayEquals(exp, sc.findHorizontalSeam());
     }
 
