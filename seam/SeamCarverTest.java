@@ -39,4 +39,35 @@ class SeamCarverTest {
         assertArrayEquals(exp, hIndex);
     }
 
+    @Test
+    public void testHorizontalSeam5By6() {
+        Picture picture = new Picture("5x6.png");
+        SeamCarver sc = new SeamCarver(picture);
+
+        double exp = 2583.198933;
+        double totalEnergy = 0;
+        int[] seam = sc.findHorizontalSeam();
+        for (int i = 0; i < seam.length; i++) {
+            totalEnergy += sc.energy(i, seam[i]);
+        }
+
+        assertEquals(exp, totalEnergy, 0.01);
+    }
+
+    @Test
+    public void testVerticalSeam5By6() {
+        Picture picture = new Picture("5x6.png");
+        SeamCarver sc = new SeamCarver(picture);
+
+        double exp = 2769.528866;
+        double totalEnergy = 0;
+        int[] seam = sc.findVerticalSeam();
+        for (int i = 0; i < seam.length; i++) {
+            totalEnergy += sc.energy(seam[i], i);
+        }
+
+        assertEquals(exp, totalEnergy, 0.01);
+    }
+
+
 }
