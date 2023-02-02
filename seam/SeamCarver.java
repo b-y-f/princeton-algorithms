@@ -164,10 +164,38 @@ public class SeamCarver {
 
     // remove horizontal seam from current picture
     public void removeHorizontalSeam(int[] seam) {
+        Picture p = new Picture(width(), height() - 1);
+        for (int col = 0; col < p.width(); col++) {
+            for (int row = 0; row < p.height(); row++) {
+                if (seam[col] != row) {
+                    if (row < seam[col]) {
+                        p.set(col, row, pic.get(col, row));
+                    }
+                    else {
+                        p.set(col, row - 1, pic.get(col, row));
+                    }
+                }
+            }
+        }
+        pic = p;
     }
 
     // remove vertical seam from current picture
     public void removeVerticalSeam(int[] seam) {
+        Picture p = new Picture(width() - 1, height());
+        for (int row = 0; row < p.height(); row++) {
+            for (int col = 0; col < p.width(); col++) {
+                if (seam[row] != col) {
+                    if (col < seam[row]) {
+                        p.set(col, row, pic.get(col, row));
+                    }
+                    else {
+                        p.set(col - 1, row, pic.get(col, row));
+                    }
+                }
+            }
+        }
+        pic = p;
     }
 
     //  unit testing (optional)
