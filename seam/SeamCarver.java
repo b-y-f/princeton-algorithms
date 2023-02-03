@@ -108,7 +108,7 @@ public class SeamCarver {
         int[] res = new int[dp.length];
         int dpWidth = dp[0].length;
         double[] slicedArray = Arrays.copyOfRange(dp[res.length - 2], 1, dpWidth - 1);
-        res[res.length - 1] = findMinIndex(slicedArray) + 1; // should be 8
+        res[res.length - 1] = findMinIndex(slicedArray) + 1;
         res[res.length - 2] = res[res.length - 1];
         for (int i = res.length - 3; i >= 1; i--) {
             int prevCol = res[i + 1];
@@ -125,6 +125,7 @@ public class SeamCarver {
             int newCol = prevCol + findDir(minEnergyIndex);
             res[i] = newCol;
         }
+        res[0] = res[1];
         return res;
     }
 
