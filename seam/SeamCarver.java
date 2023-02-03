@@ -189,17 +189,17 @@ public class SeamCarver {
     public void removeHorizontalSeam(int[] seam) {
         Picture p = new Picture(width(), height() - 1);
         for (int col = 0; col < p.width(); col++) {
+            int removeRow = seam[col];
             for (int row = 0; row < p.height(); row++) {
-                if (seam[col] != row) {
-                    if (row < seam[col]) {
-                        p.set(col, row, pic.get(col, row));
-                    }
-                    else {
-                        p.set(col, row - 1, pic.get(col, row));
-                    }
+                if (row <= removeRow) {
+                    p.set(col, row, pic.get(col, row));
+                }
+                else {
+                    p.set(col, row, pic.get(col, row + 1));
                 }
             }
         }
+
         pic = p;
     }
 
@@ -207,15 +207,15 @@ public class SeamCarver {
     public void removeVerticalSeam(int[] seam) {
         Picture p = new Picture(width() - 1, height());
         for (int row = 0; row < p.height(); row++) {
+            int removeCol = seam[row];
             for (int col = 0; col < p.width(); col++) {
-                if (seam[row] != col) {
-                    if (col < seam[row]) {
-                        p.set(col, row, pic.get(col, row));
-                    }
-                    else {
-                        p.set(col - 1, row, pic.get(col, row));
-                    }
+                if (col <= removeCol) {
+                    p.set(col, row, pic.get(col, row));
                 }
+                else {
+                    p.set(col, row, pic.get(col + 1, row));
+                }
+
             }
         }
         pic = p;
