@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.Picture;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -19,84 +18,56 @@ class SeamCarverTest {
         assertEquals(1000, sc.energy(2, 2));
     }
 
-    public void testVerticalSeam() {
-        Picture picture = new Picture("6x5.png");
-        SeamCarver sc = new SeamCarver(picture);
-
-        int[] exp = new int[] { 4, 4, 3, 2, 2 };
-        int[] vIndex = sc.findVerticalSeam();
-        assertArrayEquals(exp, vIndex);
-    }
-
-    public void testHorizontalSeam() {
-        Picture picture = new Picture("6x5.png");
-        SeamCarver sc = new SeamCarver(picture);
-
-        int[] exp = new int[] { 2, 2, 1, 2, 1, 1 };
-        int[] hIndex = sc.findHorizontalSeam();
-        assertArrayEquals(exp, hIndex);
-    }
-
     @Test
     public void testHorizontalSeam5By6() {
-        Picture picture = new Picture("5x6.png");
-        SeamCarver sc = new SeamCarver(picture);
-
-        double exp = 2583.198933;
-        double totalEnergy = 0;
-        int[] seam = sc.findHorizontalSeam();
-        for (int i = 0; i < seam.length; i++) {
-            totalEnergy += sc.energy(i, seam[i]);
-        }
-
-        assertEquals(exp, totalEnergy, 0.01);
+        testTotalEnergyWithPicture("5x6.png", 2583.198933, 0);
     }
 
     @Test
     public void testVerticalSeam5By6() {
-        Picture picture = new Picture("5x6.png");
-        SeamCarver sc = new SeamCarver(picture);
-
-        double exp = 2769.528866;
-        double totalEnergy = 0;
-        int[] seam = sc.findVerticalSeam();
-        for (int i = 0; i < seam.length; i++) {
-            totalEnergy += sc.energy(seam[i], i);
-        }
-
-        assertEquals(exp, totalEnergy, 0.01);
+        testTotalEnergyWithPicture("5x6.png", 2769.528866, 1);
     }
 
     @Test
     public void testVerticalSeam12By10() {
-        Picture picture = new Picture("12x10.png");
-        SeamCarver sc = new SeamCarver(picture);
-
-        double exp = 3311.007347;
-        double totalEnergy = 0;
-        int[] seam = sc.findVerticalSeam();
-        for (int i = 0; i < seam.length; i++) {
-            int rowIndex = seam[i];
-            totalEnergy += sc.energy(rowIndex, i);
-        }
-
-        assertEquals(exp, totalEnergy, 0.01);
+        testTotalEnergyWithPicture("12x10.png", 3311.007347, 1);
     }
 
     @Test
     public void testHorizotalSeam12By10() {
-        Picture picture = new Picture("12x10.png");
+        testTotalEnergyWithPicture("12x10.png", 3878.866388, 0);
+    }
+
+    @Test
+    public void testDiagonals() {
+        testTotalEnergyWithPicture("10x10.png", 3348.051236, 0);
+        testTotalEnergyWithPicture("10x10.png", 3260.892911, 1);
+    }
+
+
+    private void testTotalEnergyWithPicture(String filename, double expectedEnergy,
+                                            int type) {
+        Picture picture = new Picture(filename);
         SeamCarver sc = new SeamCarver(picture);
 
-        double exp = 3878.866388;
         double totalEnergy = 0;
-        int[] seam = sc.findHorizontalSeam();
-        for (int i = 0; i < seam.length; i++) {
-            int colIndex = seam[i];
-            totalEnergy += sc.energy(i, colIndex);
+        // 0 means Horizontal
+        if (type == 0) {
+            int[] seam = sc.findHorizontalSeam();
+            for (int i = 0; i < seam.length; i++) {
+                totalEnergy += sc.energy(i, seam[i]);
+            }
+        }
+        // 1 means Vertical
+        else {
+            int[] seam = sc.findVerticalSeam();
+            for (int i = 0; i < seam.length; i++) {
+                totalEnergy += sc.energy(seam[i], i);
+            }
         }
 
-        assertEquals(exp, totalEnergy, 0.01);
+
+        assertEquals(expectedEnergy, totalEnergy, 0.01);
     }
 
 
