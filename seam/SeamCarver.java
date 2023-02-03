@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.Picture;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 public class SeamCarver {
     private static final int DEFAULT_ENERGY = 1000;
@@ -105,16 +106,18 @@ public class SeamCarver {
 
     private int[] getVerticalIndex(double[][] dp) {
         int[] res = new int[dp.length];
-        res[res.length - 1] = findMinIndex(dp[res.length - 2]) + 1;
-        res[res.length - 2] = findMinIndex(dp[res.length - 2]) + 1;
+        int dpWidth = dp[0].length;
+        double[] slicedArray = Arrays.copyOfRange(dp[res.length - 2], 1, dpWidth - 1);
+        res[res.length - 1] = findMinIndex(slicedArray) + 1; // should be 8
+        res[res.length - 2] = res[res.length - 1];
         for (int i = res.length - 3; i >= 1; i--) {
             int prevCol = res[i + 1];
             int leftCol = prevCol;
             int rightCol = prevCol;
-            if (prevCol - 1 >= 0) {
+            if (prevCol - 1 >= 1) {
                 leftCol--;
             }
-            if (prevCol + 1 < dp[0].length - 1) {
+            if (prevCol + 1 < dpWidth - 1) {
                 rightCol++;
             }
             double[] dirs = { dp[i][leftCol], dp[i][prevCol], dp[i][rightCol] };
