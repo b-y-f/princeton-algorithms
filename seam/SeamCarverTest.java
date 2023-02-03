@@ -40,8 +40,8 @@ class SeamCarverTest {
 
     @Test
     public void testDiagonals() {
-        testTotalEnergyWithPicture("10x10.png", 3348.051236, 0);
-        testTotalEnergyWithPicture("10x10.png", 3260.892911, 1);
+        testTotalEnergyWithPicture("10x10.png", 3260.892911, 0);
+        testTotalEnergyWithPicture("10x10.png", 3348.051236, 1);
     }
 
 
