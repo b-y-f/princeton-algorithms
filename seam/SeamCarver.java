@@ -106,20 +106,21 @@ public class SeamCarver {
     private int[] getVerticalIndex(double[][] dp) {
         int[] res = new int[dp.length];
         res[res.length - 1] = findMinIndex(dp[res.length - 2]) + 1;
-        res[res.length - 2] = findMinIndex(dp[res.length - 2]);
+        res[res.length - 2] = findMinIndex(dp[res.length - 2]) + 1;
         for (int i = res.length - 3; i >= 1; i--) {
             int prevCol = res[i + 1];
             int leftCol = prevCol;
             int rightCol = prevCol;
-            if (prevCol - 1 >= 1) {
+            if (prevCol - 1 >= 0) {
                 leftCol--;
             }
-            if (prevCol + 1 < dp[0].length) {
+            if (prevCol + 1 < dp[0].length - 1) {
                 rightCol++;
             }
             double[] dirs = { dp[i][leftCol], dp[i][prevCol], dp[i][rightCol] };
             int minEnergyIndex = findMinIndex(dirs);
-            res[i] = prevCol + findDir(minEnergyIndex);
+            int newCol = prevCol + findDir(minEnergyIndex);
+            res[i] = newCol;
         }
         return res;
     }
@@ -137,8 +138,16 @@ public class SeamCarver {
 
     private double getMinEnergyAboveIt(double[][] dp, int row, int col) {
         double upper = dp[row - 1][col];
-        double rightEnergy = dp[row - 1][col + 1];
-        double leftEnergy = dp[row - 1][col - 1];
+        double rightEnergy = upper;
+        double leftEnergy = upper;
+
+        if (col + 1 != dp[0].length - 1) {
+            rightEnergy = dp[row - 1][col + 1];
+        }
+        if (col - 1 != 0) {
+            leftEnergy = dp[row - 1][col - 1];
+
+        }
         return getMinFromThree(upper, leftEnergy, rightEnergy);
     }
 
@@ -159,7 +168,7 @@ public class SeamCarver {
         return minIndex;
     }
 
-    private static int findDir(int idx) {
+    private int findDir(int idx) {
         if (idx == 0) {
             return -1;
         }
