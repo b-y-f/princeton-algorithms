@@ -19,7 +19,6 @@ class SeamCarverTest {
         assertEquals(1000, sc.energy(2, 2));
     }
 
-    @Test
     public void testVerticalSeam() {
         Picture picture = new Picture("6x5.png");
         SeamCarver sc = new SeamCarver(picture);
@@ -29,7 +28,6 @@ class SeamCarverTest {
         assertArrayEquals(exp, vIndex);
     }
 
-    @Test
     public void testHorizontalSeam() {
         Picture picture = new Picture("6x5.png");
         SeamCarver sc = new SeamCarver(picture);
@@ -64,6 +62,38 @@ class SeamCarverTest {
         int[] seam = sc.findVerticalSeam();
         for (int i = 0; i < seam.length; i++) {
             totalEnergy += sc.energy(seam[i], i);
+        }
+
+        assertEquals(exp, totalEnergy, 0.01);
+    }
+
+    @Test
+    public void testVerticalSeam12By10() {
+        Picture picture = new Picture("12x10.png");
+        SeamCarver sc = new SeamCarver(picture);
+
+        double exp = 3311.007347;
+        double totalEnergy = 0;
+        int[] seam = sc.findVerticalSeam();
+        for (int i = 0; i < seam.length; i++) {
+            int rowIndex = seam[i];
+            totalEnergy += sc.energy(rowIndex, i);
+        }
+
+        assertEquals(exp, totalEnergy, 0.01);
+    }
+
+    @Test
+    public void testHorizotalSeam12By10() {
+        Picture picture = new Picture("12x10.png");
+        SeamCarver sc = new SeamCarver(picture);
+
+        double exp = 3878.866388;
+        double totalEnergy = 0;
+        int[] seam = sc.findHorizontalSeam();
+        for (int i = 0; i < seam.length; i++) {
+            int colIndex = seam[i];
+            totalEnergy += sc.energy(i, colIndex);
         }
 
         assertEquals(exp, totalEnergy, 0.01);
