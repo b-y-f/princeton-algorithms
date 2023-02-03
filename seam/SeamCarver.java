@@ -87,78 +87,88 @@ public class SeamCarver {
 
     // sequence of indices for vertical seam
     public int[] findVerticalSeam() {
-        double[][] dp = minEnergyToBot(energy.clone());
+        double[][] copyEnergy = deepCopy(energy);
+        double[][] dp = minEnergyToBot(copyEnergy);
         return getVerticalIndex(dp);
+    }
+
+    private double[][] deepCopy(double[][] originalArray) {
+        double[][] copiedArray = new double[originalArray.length][];
+        for (int i = 0; i < originalArray.length; i++) {
+            double[] aMatrix = originalArray[i];
+            int aLength = aMatrix.length;
+            copiedArray[i] = new double[aLength];
+            System.arraycopy(aMatrix, 0, copiedArray[i], 0, aLength);
+        }
+        return copiedArray;
     }
 
     private int[] getVerticalIndex(double[][] dp) {
         int[] res = new int[dp.length];
-        res[0] = findMinIndex(dp[1]);
-        for (int i = 1; i < res.length; i++) {
-            int lastCol = res[i - 1];
-            double left = Double.MAX_VALUE;
-            double right = Double.MAX_VALUE;
-            if (lastCol - 1 >= 0) {
-                left = dp[i][lastCol - 1];
+        res[res.length - 1] = findMinIndex(dp[res.length - 2]) + 1;
+        res[res.length - 2] = findMinIndex(dp[res.length - 2]);
+        for (int i = res.length - 3; i >= 1; i--) {
+            int prevCol = res[i + 1];
+            int leftCol = prevCol;
+            int rightCol = prevCol;
+            if (prevCol - 1 >= 1) {
+                leftCol--;
             }
-            if (lastCol + 1 < dp[0].length) {
-                right = dp[i][lastCol + 1];
+            if (prevCol + 1 < dp[0].length) {
+                rightCol++;
             }
-
-            if (i == res.length - 1) {
-                res[i] = lastCol;
-            }
-            else {
-                double[] nextEnergies = new double[] { left, dp[i][lastCol], right };
-                int currIndex = lastCol + getDir(nextEnergies);
-                res[i] = currIndex;
-            }
-
+            double[] dirs = { dp[i][leftCol], dp[i][prevCol], dp[i][rightCol] };
+            int minEnergyIndex = findMinIndex(dirs);
+            res[i] = prevCol + findDir(minEnergyIndex);
         }
         return res;
     }
 
 
     private double[][] minEnergyToBot(double[][] dp) {
-        for (int row = 1; row < dp.length; row++) {
-            for (int col = 0; col < dp[0].length; col++) {
-                double curr = dp[row][col];
-                double downEnergy = curr + dp[row - 1][col];
-                double leftEnergy = curr;
-                double rightEnergy = curr;
-                if (col - 1 >= 0) {
-                    leftEnergy += dp[row - 1][col - 1];
-                }
-                else if (col + 1 < dp[0].length) {
-                    rightEnergy += dp[row - 1][col + 1];
-                }
-                dp[row][col] = Math.min(downEnergy, Math.min(leftEnergy, rightEnergy));
+        for (int row = 2; row < dp.length - 1; row++) {
+            for (int col = 1; col < dp[0].length - 1; col++) {
+                double minEnergyAddAllDir = dp[row][col] + getMinEnergyAboveIt(dp, row, col);
+                dp[row][col] = minEnergyAddAllDir;
             }
         }
         return dp;
     }
 
-    private int getDir(double[] threeDirEnergy) {
-        int minIndex = findMinIndex(threeDirEnergy);
-        if (minIndex == 0) {
-            return -1;
-        }
-        else if (minIndex == 2) {
-            return 1;
-        }
-        return 0;
+    private double getMinEnergyAboveIt(double[][] dp, int row, int col) {
+        double upper = dp[row - 1][col];
+        double rightEnergy = dp[row - 1][col + 1];
+        double leftEnergy = dp[row - 1][col - 1];
+        return getMinFromThree(upper, leftEnergy, rightEnergy);
     }
 
+    private double getMinFromThree(double a, double b, double c) {
+        return Math.min(a, Math.min(b, c));
+    }
+
+
     private int findMinIndex(double[] arr) {
-        double min = arr[0];
+        double min = Double.MAX_VALUE;
         int minIndex = 0;
-        for (int i = 1; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             if (arr[i] < min) {
                 min = arr[i];
                 minIndex = i;
             }
         }
         return minIndex;
+    }
+
+    private static int findDir(int idx) {
+        if (idx == 0) {
+            return -1;
+        }
+        else if (idx == 2) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
 
