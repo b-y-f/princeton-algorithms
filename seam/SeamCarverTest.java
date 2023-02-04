@@ -20,8 +20,8 @@ class SeamCarverTest {
 
     @Test
     public void test5By6() {
-        testTotalEnergyWithPicture("5x6.png", 2583.198933, 0);
         testTotalEnergyWithPicture("5x6.png", 2769.528866, 1);
+        testTotalEnergyWithPicture("5x6.png", 2583.198933, 0);
     }
 
     @Test
@@ -33,26 +33,32 @@ class SeamCarverTest {
 
     @Test
     public void test10x10() {
-        testTotalEnergyWithPicture("10x10.png", 3260.892911, 0);
         testTotalEnergyWithPicture("10x10.png", 3348.051236, 1);
+        testTotalEnergyWithPicture("10x10.png", 3260.892911, 0);
+    }
+
+    @Test
+    public void test3x7() {
+        testTotalEnergyWithPicture("3x7.png", 3386.629883, 1);
+        testTotalEnergyWithPicture("3x7.png", 2236.167314, 0);
     }
 
     @Test
     public void test4x6() {
-        testTotalEnergyWithPicture("4x6.png", 2346.424595, 0);
         testTotalEnergyWithPicture("4x6.png", 2706.370116, 1);
+        testTotalEnergyWithPicture("4x6.png", 2346.424595, 0);
     }
 
     @Test
     public void testDiagonals() {
-        testTotalEnergyWithPicture("diagonals.png", 8246.198844, 0);
         testTotalEnergyWithPicture("diagonals.png", 6372.339191, 1);
+        testTotalEnergyWithPicture("diagonals.png", 8246.198844, 0);
     }
 
     @Test
     public void testStripes() {
-        testTotalEnergyWithPicture("stripes.png", 5091.710692, 0);
         testTotalEnergyWithPicture("stripes.png", 6416.729559, 1);
+        testTotalEnergyWithPicture("stripes.png", 5091.710692, 0);
     }
 
 
