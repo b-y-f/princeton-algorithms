@@ -11,6 +11,7 @@ import edu.princeton.cs.algs4.StdDraw;
 public class KdTree {
 
     private KDNode root;
+    private int size;
 
     public KdTree() {
     }
@@ -35,17 +36,9 @@ public class KdTree {
     }
 
     public int size() {
-        return size(root);
+        return size;
     }
 
-    private int size(KDNode t) {
-        if (t == null) {
-            return 0;
-        }
-        else {
-            return size(t.left) + 1 + size(t.right);
-        }
-    }
 
     public void insert(Point2D p) {
         if (p == null) {
@@ -54,16 +47,18 @@ public class KdTree {
         root = insertRecur(p, root, 1, 1, 0, 0, 1);
     }
 
+
     private KDNode insertRecur(Point2D p, KDNode node, int level, double top,
                                double bot, double left,
                                double right) {
-        if (node == null) {
+        if (!contains(p)) {
             if (isVertical(level)) {
                 node = new KDNode(p, level, p.x(), bot, p.x(), top);
             }
             else {
                 node = new KDNode(p, level, left, p.y(), right, p.y());
             }
+            size++;
         }
         else if (getCutdim(p, level) < getCutdim(node.point, level)) {
             if (isVertical(level)) {
