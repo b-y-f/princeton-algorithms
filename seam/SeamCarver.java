@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.Picture;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 public class SeamCarver {
     private static final int DEFAULT_ENERGY = 1000;
@@ -71,7 +70,8 @@ public class SeamCarver {
 
     // sequence of indices for horizontal seam
     public int[] findHorizontalSeam() {
-        double[][] copyT = transposeMatrix(energy.clone());
+        double[][] energyWithoutEdge = removeFirstAndLastColumns(energy);
+        double[][] copyT = transposeMatrix(energyWithoutEdge);
         double[][] dp = minEnergyToBot(copyT);
         return getVerticalIndex(dp);
     }
@@ -88,44 +88,67 @@ public class SeamCarver {
 
     // sequence of indices for vertical seam
     public int[] findVerticalSeam() {
-        double[][] copyEnergy = deepCopy(energy);
-        double[][] dp = minEnergyToBot(copyEnergy);
+        double[][] energyWithoutEdge = removeFirstAndLastColumns(energy);
+        double[][] dp = minEnergyToBot(energyWithoutEdge);
         return getVerticalIndex(dp);
     }
 
-    private double[][] deepCopy(double[][] originalArray) {
-        double[][] copiedArray = new double[originalArray.length][];
-        for (int i = 0; i < originalArray.length; i++) {
-            double[] aMatrix = originalArray[i];
-            int aLength = aMatrix.length;
-            copiedArray[i] = new double[aLength];
-            System.arraycopy(aMatrix, 0, copiedArray[i], 0, aLength);
+    private double[][] removeFirstAndLastColumns(double[][] originalMatrix) {
+        int rows = originalMatrix.length;
+        int columns = originalMatrix[0].length;
+        double[][] newMatrix = new double[rows - 2][columns - 2];
+        for (int i = 1; i < rows - 1; i++) {
+            for (int j = 0; j < columns - 2; j++) {
+                newMatrix[i - 1][j] = originalMatrix[i][j + 1];
+            }
         }
-        return copiedArray;
+        return newMatrix;
     }
 
-    private int[] getVerticalIndex(double[][] dp) {
-        int[] res = new int[dp.length];
-        int dpWidth = dp[0].length;
-        double[] slicedArray = Arrays.copyOfRange(dp[res.length - 2], 1, dpWidth - 1);
-        res[res.length - 1] = findMinIndex(slicedArray) + 1;
-        res[res.length - 2] = res[res.length - 1];
-        for (int i = res.length - 3; i >= 1; i--) {
+    private int[] getVerticalIndex(double[][] energyNoEdge) {
+        int dpCols = energyNoEdge[0].length;
+        int dpRows = energyNoEdge.length;
+
+        int[] res = new int[energyNoEdge.length + 2];
+
+        // find min value in first line
+        res[res.length - 2] = findMinIndex(energyNoEdge[dpRows - 1]);
+
+        for (int i = res.length - 3; i >= 0; i--) {
             int prevCol = res[i + 1];
             int leftCol = prevCol;
             int rightCol = prevCol;
-            if (prevCol - 1 >= 1) {
+            if (prevCol - 1 >= 0) {
                 leftCol--;
             }
-            if (prevCol + 1 < dpWidth - 1) {
+            if (prevCol + 1 < dpCols) {
                 rightCol++;
             }
-            double[] dirs = { dp[i][leftCol], dp[i][prevCol], dp[i][rightCol] };
+            double energyLeft = energyNoEdge[i][leftCol];
+            double energyMid = energyNoEdge[i][prevCol];
+            double energyRight = energyNoEdge[i][rightCol];
+            double[] dirs = { energyLeft, energyMid, energyRight };
             int minEnergyIndex = findMinIndex(dirs);
             int newCol = prevCol + findDir(minEnergyIndex);
-            res[i] = newCol;
+            if (newCol < 0) {
+                newCol = 0;
+            }
+            if (newCol > dpCols - 1) {
+                newCol = dpCols - 1;
+            }
+            res[i + 1] = newCol;
+        }
+
+        int[] postRes = postProcessDP(res, res.length);
+        return postRes;
+    }
+
+    private int[] postProcessDP(int[] res, int length) {
+        for (int i = 0; i < length; i++) {
+            res[i] += 1;
         }
         res[0] = res[1];
+        res[length - 1] = res[length - 2];
         return res;
     }
 
