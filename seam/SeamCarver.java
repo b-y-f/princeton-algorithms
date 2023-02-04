@@ -110,10 +110,14 @@ public class SeamCarver {
         int dpRows = energyNoEdge.length;
 
         int[] res = new int[energyNoEdge.length + 2];
+        initFirstRow(energyNoEdge, dpRows, res);
+        processingRestRows(energyNoEdge, dpCols, res);
 
-        // find min value in first line
-        res[res.length - 2] = findMinIndex(energyNoEdge[dpRows - 1]);
+        int[] postRes = postProcessDP(res, res.length);
+        return postRes;
+    }
 
+    private void processingRestRows(double[][] energyNoEdge, int dpCols, int[] res) {
         for (int i = res.length - 4; i >= 0; i--) {
             int prevCol = res[i + 2];
             int leftCol = prevCol;
@@ -130,17 +134,22 @@ public class SeamCarver {
             double[] dirs = { energyLeft, energyMid, energyRight };
             int minEnergyIndex = findMinIndex(dirs);
             int newCol = prevCol + findDir(minEnergyIndex);
-            if (newCol < 0) {
-                newCol = 0;
-            }
-            if (newCol > dpCols - 1) {
-                newCol = dpCols - 1;
-            }
-            res[i + 1] = newCol;
+            res[i + 1] = filterEdge(dpCols, newCol);
         }
+    }
 
-        int[] postRes = postProcessDP(res, res.length);
-        return postRes;
+    private void initFirstRow(double[][] energyNoEdge, int dpRows, int[] res) {
+        res[res.length - 2] = findMinIndex(energyNoEdge[dpRows - 1]);
+    }
+
+    private int filterEdge(int dpCols, int newCol) {
+        if (newCol < 0) {
+            newCol = 0;
+        }
+        if (newCol > dpCols - 1) {
+            newCol = dpCols - 1;
+        }
+        return newCol;
     }
 
     private int[] postProcessDP(int[] res, int length) {
