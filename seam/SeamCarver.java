@@ -11,11 +11,11 @@ public class SeamCarver {
     // create a seam carver object based on the given picture
     public SeamCarver(Picture picture) {
         pic = picture;
-        initEnergy();
+        updateEnergy();
 
     }
 
-    private void initEnergy() {
+    private void updateEnergy() {
         energy = new double[height()][width()];
         for (int row = 0; row < height(); row++) {
             for (int col = 0; col < width(); col++) {
@@ -239,8 +239,8 @@ public class SeamCarver {
                 }
             }
         }
-
         pic = p;
+        updateEnergy();
     }
 
     // remove vertical seam from current picture
@@ -263,6 +263,7 @@ public class SeamCarver {
             }
         }
         pic = p;
+        updateEnergy();
     }
 
     //  unit testing (optional)
