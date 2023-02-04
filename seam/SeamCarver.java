@@ -17,9 +17,9 @@ public class SeamCarver {
 
     private void initEnergy() {
         energy = new double[height()][width()];
-        for (int i = 0; i < height(); i++) {
-            for (int j = 0; j < width(); j++) {
-                setEnergyAt(i, j);
+        for (int row = 0; row < height(); row++) {
+            for (int col = 0; col < width(); col++) {
+                setEnergyAt(row, col);
             }
         }
     }
@@ -65,6 +65,10 @@ public class SeamCarver {
 
     // energy of pixel at column x and row y
     public double energy(int x, int y) {
+        if (x < 0 || x > width() - 1 || y < 0 || y > height() - 1) {
+            throw new IllegalArgumentException("invalid x or y!");
+        }
+
         return energy[y][x];
     }
 
@@ -219,6 +223,10 @@ public class SeamCarver {
 
     // remove horizontal seam from current picture
     public void removeHorizontalSeam(int[] seam) {
+        if (seam == null || seam.length != pic.width()) {
+            throw new IllegalArgumentException("Seam is invalid!");
+        }
+
         Picture p = new Picture(width(), height() - 1);
         for (int col = 0; col < p.width(); col++) {
             int removeRow = seam[col];
@@ -237,6 +245,10 @@ public class SeamCarver {
 
     // remove vertical seam from current picture
     public void removeVerticalSeam(int[] seam) {
+        if (seam == null || seam.length != pic.height()) {
+            throw new IllegalArgumentException("Seam is invalid!");
+        }
+
         Picture p = new Picture(width() - 1, height());
         for (int row = 0; row < p.height(); row++) {
             int removeCol = seam[row];
