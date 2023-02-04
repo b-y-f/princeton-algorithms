@@ -114,8 +114,8 @@ public class SeamCarver {
         // find min value in first line
         res[res.length - 2] = findMinIndex(energyNoEdge[dpRows - 1]);
 
-        for (int i = res.length - 3; i >= 0; i--) {
-            int prevCol = res[i + 1];
+        for (int i = res.length - 4; i >= 0; i--) {
+            int prevCol = res[i + 2];
             int leftCol = prevCol;
             int rightCol = prevCol;
             if (prevCol - 1 >= 0) {
@@ -154,8 +154,8 @@ public class SeamCarver {
 
 
     private double[][] minEnergyToBot(double[][] dp) {
-        for (int row = 2; row < dp.length - 1; row++) {
-            for (int col = 1; col < dp[0].length - 1; col++) {
+        for (int row = 1; row < dp.length; row++) {
+            for (int col = 0; col < dp[0].length; col++) {
                 double minEnergyAddAllDir = dp[row][col] + getMinEnergyAboveIt(dp, row, col);
                 dp[row][col] = minEnergyAddAllDir;
             }
@@ -168,10 +168,10 @@ public class SeamCarver {
         double rightEnergy = upper;
         double leftEnergy = upper;
 
-        if (col + 1 != dp[0].length - 1) {
+        if (col + 1 < dp[0].length) {
             rightEnergy = dp[row - 1][col + 1];
         }
-        if (col - 1 != 0) {
+        if (col - 1 >= 0) {
             leftEnergy = dp[row - 1][col - 1];
 
         }
