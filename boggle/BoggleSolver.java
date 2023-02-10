@@ -57,7 +57,7 @@ public class BoggleSolver {
         }
 
         visited[row][col] = true;
-        if (nextNode.isWord()) {
+        if (nextNode.isEndOfWord()) {
             words.add(nextNode.getWord());
         }
 
@@ -85,7 +85,7 @@ public class BoggleSolver {
     public int scoreOf(String word) {
 
         TrieNode node = trie.find(word);
-        if (node == null || !node.isWord()) {
+        if (node == null || !node.isEndOfWord()) {
             return 0;
         }
 

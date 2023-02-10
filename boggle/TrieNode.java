@@ -7,12 +7,12 @@
 public class TrieNode {
     private static final int R = 26;
     private TrieNode[] children;
-    private boolean isWord;
+    private boolean isEndOfWord;
     private String word;
 
     public TrieNode() {
         children = new TrieNode[R];
-        isWord = false;
+        isEndOfWord = false;
     }
 
     public void insert(String word) {
@@ -24,7 +24,7 @@ public class TrieNode {
             }
             node = node.children[index];
         }
-        node.isWord = true;
+        node.isEndOfWord = true;
         node.word = word;
     }
 
@@ -33,8 +33,8 @@ public class TrieNode {
         return children[index];
     }
 
-    public boolean isWord() {
-        return isWord;
+    public boolean isEndOfWord() {
+        return isEndOfWord;
     }
 
     public String getWord() {

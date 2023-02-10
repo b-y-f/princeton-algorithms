@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *  Description:
  **************************************************************************** */
 class BoggleSolverTest {
-    In in = new In("dictionary-algs4.txt");
-    String[] dictionary = in.readAllStrings();
-    BoggleSolver solver = new BoggleSolver(dictionary);
+    private In in = new In("dictionary-algs4.txt");
+    private String[] dictionary = getIn().readAllStrings();
+    private BoggleSolver solver = new BoggleSolver(dictionary);
 
     @Test
     public void testBoard4x4() {
@@ -32,4 +32,23 @@ class BoggleSolverTest {
         }
         assertEquals(84, score);
     }
+
+    public In getIn() {
+        return in;
+    }
+
+    public void setIn(In in) {
+        this.in = in;
+    }
+
+    // @Test
+    // public void testBoardCouscous() {
+    //     BoggleBoard board = new BoggleBoard("board-couscous.txt");
+    //     int cnt = 0;
+    //     for (String word : solver.getAllValidWords(board)) {
+    //         cnt++;
+    //     }
+    //     assertEquals(12, cnt);
+    //
+    // }
 }
