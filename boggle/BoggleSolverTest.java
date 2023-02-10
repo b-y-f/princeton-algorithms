@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  **************************************************************************** */
 class BoggleSolverTest {
     private In in = new In("dictionary-algs4.txt");
-    private String[] dictionary = getIn().readAllStrings();
+    private String[] dictionary = in.readAllStrings();
     private BoggleSolver solver = new BoggleSolver(dictionary);
 
     @Test
@@ -24,6 +24,17 @@ class BoggleSolverTest {
     }
 
     @Test
+    public void testBoardCouscous() {
+        BoggleBoard board = new BoggleBoard("board-couscous.txt");
+        int score = 0;
+        for (String word : solver.getAllValidWords(board)) {
+            System.out.println(word);
+            score += solver.scoreOf(word);
+        }
+        assertEquals(24, score);
+    }
+
+    @Test
     public void testBoardQ() {
         BoggleBoard boardQ = new BoggleBoard("board-q.txt");
         int score = 0;
@@ -32,23 +43,4 @@ class BoggleSolverTest {
         }
         assertEquals(84, score);
     }
-
-    public In getIn() {
-        return in;
-    }
-
-    public void setIn(In in) {
-        this.in = in;
-    }
-
-    // @Test
-    // public void testBoardCouscous() {
-    //     BoggleBoard board = new BoggleBoard("board-couscous.txt");
-    //     int cnt = 0;
-    //     for (String word : solver.getAllValidWords(board)) {
-    //         cnt++;
-    //     }
-    //     assertEquals(12, cnt);
-    //
-    // }
 }
