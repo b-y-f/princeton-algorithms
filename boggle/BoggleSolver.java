@@ -109,8 +109,4 @@ public class BoggleSolver {
             return 11;
         }
     }
-
-    public static void main(String[] args) {
-
-    }
 }
