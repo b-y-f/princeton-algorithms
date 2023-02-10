@@ -1,16 +1,16 @@
 public class Trie {
-    public TrieNode root;
+    private TrieNode root;
 
     public Trie() {
-        root = new TrieNode();
+        setRoot(new TrieNode());
     }
 
     public void insert(String word) {
-        root.insert(word);
+        getRoot().insert(word);
     }
 
     public TrieNode find(String word) {
-        TrieNode node = root;
+        TrieNode node = getRoot();
         for (char c : word.toCharArray()) {
             node = node.getChild(c);
             if (node == null) {
@@ -18,5 +18,13 @@ public class Trie {
             }
         }
         return node;
+    }
+
+    public TrieNode getRoot() {
+        return root;
+    }
+
+    public void setRoot(TrieNode root) {
+        this.root = root;
     }
 }
