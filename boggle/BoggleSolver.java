@@ -37,7 +37,7 @@ public class BoggleSolver {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                dfs(board, visited, i, j, trie.root, words);
+                dfs(board, visited, i, j, trie.getRoot(), words);
             }
         }
 
