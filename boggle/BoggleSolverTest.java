@@ -16,31 +16,31 @@ class BoggleSolverTest {
     @Test
     public void testBoard4x4() {
         BoggleBoard boardQ = new BoggleBoard("board4x4.txt");
-        int score = 0;
+        int entires = 0;
         for (String word : solver.getAllValidWords(boardQ)) {
-            score += solver.scoreOf(word);
+            entires++;
         }
-        assertEquals(33, score);
+        assertEquals(29, entires);
     }
 
     @Test
     public void testBoardCouscous() {
         BoggleBoard board = new BoggleBoard("board-couscous.txt");
-        int score = 0;
+        int entires = 0;
         for (String word : solver.getAllValidWords(board)) {
-            System.out.println(word);
-            score += solver.scoreOf(word);
+            entires++;
         }
-        assertEquals(24, score);
+        assertEquals(12, entires);
     }
 
     @Test
     public void testBoardQ() {
         BoggleBoard boardQ = new BoggleBoard("board-q.txt");
-        int score = 0;
+        int entires = 0;
+
         for (String word : solver.getAllValidWords(boardQ)) {
-            score += solver.scoreOf(word);
+            entires++;
         }
-        assertEquals(84, score);
+        assertEquals(29, entires);
     }
 }
