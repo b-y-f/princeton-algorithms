@@ -19,11 +19,17 @@ public class BoggleSolver {
     public BoggleSolver(String[] dictionary) {
         trie = new Trie();
         for (String word : dictionary) {
-            if (word.length() < 3) {
-                continue;
+            if (isValid(word)) {
+                trie.insert(word);
             }
-            trie.insert(word);
         }
+    }
+
+    private static boolean isValid(String word) {
+        if (word.length() < 3) {
+            return false;
+        }
+        return true;
     }
 
     /**
