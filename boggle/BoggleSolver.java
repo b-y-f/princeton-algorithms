@@ -63,10 +63,9 @@ public class BoggleSolver {
         TrieNode nextNode = node.getChild(letter);
         if (letter == 'Q') {
             nextNode = node.getChild(letter);
-            if (nextNode == null) {
-                return;
+            if (nextNode != null) {
+                nextNode = nextNode.getChild('U');
             }
-            nextNode = nextNode.getChild('U');
         }
 
         if (nextNode == null) {
