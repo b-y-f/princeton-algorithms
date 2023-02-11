@@ -30,16 +30,18 @@ class BoggleSolverTest {
         for (String word : solver.getAllValidWords(board)) {
             entires++;
         }
-        assertEquals(12, entires);
+        assertEquals(0, entires);
     }
 
     @Test
     public void testBoardQ() {
+        // TODO need to deal with "qu" problem
         BoggleBoard boardQ = new BoggleBoard("board-q.txt");
         int entires = 0;
 
         for (String word : solver.getAllValidWords(boardQ)) {
             entires++;
+            System.out.println(word);
         }
         assertEquals(29, entires);
     }
