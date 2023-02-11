@@ -19,6 +19,9 @@ public class BoggleSolver {
     public BoggleSolver(String[] dictionary) {
         trie = new Trie();
         for (String word : dictionary) {
+            if (word.length() < 3) {
+                continue;
+            }
             trie.insert(word);
         }
     }

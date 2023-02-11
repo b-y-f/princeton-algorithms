@@ -15,9 +15,9 @@ public class TrieNode {
         isEndOfWord = false;
     }
 
-    public void insert(String word) {
+    public void insert(String newWord) {
         TrieNode node = this;
-        for (char c : word.toCharArray()) {
+        for (char c : newWord.toCharArray()) {
             int index = c - 'A';
             if (node.children[index] == null) {
                 node.children[index] = new TrieNode();
@@ -25,7 +25,7 @@ public class TrieNode {
             node = node.children[index];
         }
         node.isEndOfWord = true;
-        node.word = word;
+        node.word = newWord;
     }
 
     public TrieNode getChild(char c) {
