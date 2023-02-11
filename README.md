@@ -1,5 +1,8 @@
 # Coursera-Princeton-Algorithms
 
+Oringal : [COS 226](https://www.cs.princeton.edu/courses/archive/spring23/cos226/assignments.php) + [COS 126](https://www.cs.princeton.edu/courses/archive/fall22/cos126/assignments/) assignment
+
+
 Leanring algo in coursera for fun :)
 
 TODO implement a LinkList version `queues`
