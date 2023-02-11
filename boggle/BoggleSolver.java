@@ -61,6 +61,14 @@ public class BoggleSolver {
 
         char letter = board.getLetter(row, col);
         TrieNode nextNode = node.getChild(letter);
+        if (letter == 'Q') {
+            nextNode = node.getChild(letter);
+            if (nextNode == null) {
+                return;
+            }
+            nextNode = nextNode.getChild('U');
+        }
+
         if (nextNode == null) {
             return;
         }
