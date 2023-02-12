@@ -1,4 +1,10 @@
 .idea
+*.mtf
+*.bin
+*.huf
+*.bwt
+*.jpg
+*.gif
 .lift
 *.txt
 *.png
