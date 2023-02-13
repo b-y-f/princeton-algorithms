@@ -7,6 +7,8 @@
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 
+import java.util.Arrays;
+
 /**
  * > java-algs4 BurrowsWheeler - < abra.txt | java-algs4 BurrowsWheeler +
  * <p/>
@@ -46,6 +48,24 @@ public class BurrowsWheeler {
      * reading from standard input and writing to standard output
      */
     public static void inverseTransform() {
+        int first = BinaryStdIn.readInt();
+        String t = BinaryStdIn.readString();
+
+        int n = t.length();
+        String[] s = new String[n];
+
+        for (int ignore = 0; ignore < n; ignore++) {
+            for (int j = 0; j < n; j++) {
+                if (s[j] == null) {
+                    s[j] = "";
+                }
+                s[j] = t.charAt(j) + s[j];
+            }
+            Arrays.sort(s);
+        }
+
+        BinaryStdOut.write(s[first]);
+        cleanup();
 
     }
 
