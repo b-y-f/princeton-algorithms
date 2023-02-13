@@ -27,7 +27,8 @@ public class MoveToFront {
                 }
             }
         }
-        cleanup();
+        
+        BinaryStdOut.close();
     }
 
     /**
@@ -42,13 +43,10 @@ public class MoveToFront {
             BinaryStdOut.write(c);
             moveElementToFront(index);
         }
-        cleanup();
-    }
 
-    private static void cleanup() {
-        BinaryStdIn.close();
         BinaryStdOut.close();
     }
+
 
     private static void moveElementToFront(int index) {
         char element = chars[index];

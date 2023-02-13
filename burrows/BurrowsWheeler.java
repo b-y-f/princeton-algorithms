@@ -35,13 +35,9 @@ public class BurrowsWheeler {
         BinaryStdOut.write(first);
         BinaryStdOut.write(t.toString());
 
-        cleanup();
-    }
-
-    private static void cleanup() {
-        BinaryStdIn.close();
         BinaryStdOut.close();
     }
+
 
     /**
      * apply Burrows-Wheeler inverse transform,
@@ -65,7 +61,8 @@ public class BurrowsWheeler {
         }
 
         BinaryStdOut.write(s[first]);
-        cleanup();
+
+        BinaryStdOut.close();
 
     }
 

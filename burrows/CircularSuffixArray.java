@@ -7,7 +7,6 @@
 import java.util.Arrays;
 
 public class CircularSuffixArray {
-    private String s;
     private int n;
     private Integer[] indices;
 
@@ -18,7 +17,6 @@ public class CircularSuffixArray {
      */
     public CircularSuffixArray(String s) {
         if (s == null) throw new IllegalArgumentException("s cannot be null");
-        this.s = s;
         this.n = s.length();
         indices = new Integer[n];
         for (int i = 0; i < n; i++) {
