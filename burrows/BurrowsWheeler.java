@@ -20,21 +20,23 @@ public class BurrowsWheeler {
     public static void transform() {
         String s = BinaryStdIn.readString();
         CircularSuffixArray csa = new CircularSuffixArray(s);
-        StringBuilder sb = new StringBuilder();
+        StringBuilder t = new StringBuilder();
         int first = -1;
         for (int i = 0; i < csa.length(); i++) {
             if (csa.index(i) == 0) {
                 first = i;
             }
             int position = (csa.index(i) + csa.length() - 1) % csa.length();
-            sb.append(s.charAt(position));
+            t.append(s.charAt(position));
         }
-        // System.out.println(first);
-        // System.out.println(sb.toString());
 
         BinaryStdOut.write(first);
-        BinaryStdOut.write(sb.toString());
+        BinaryStdOut.write(t.toString());
 
+        cleanup();
+    }
+
+    private static void cleanup() {
         BinaryStdIn.close();
         BinaryStdOut.close();
     }
@@ -44,6 +46,7 @@ public class BurrowsWheeler {
      * reading from standard input and writing to standard output
      */
     public static void inverseTransform() {
+
     }
 
     /**
@@ -61,8 +64,6 @@ public class BurrowsWheeler {
         else {
             throw new IllegalArgumentException("wrong arguments");
         }
-        // BWT: annb$aa
-        // Inverse BWT: banana
     }
 
 }

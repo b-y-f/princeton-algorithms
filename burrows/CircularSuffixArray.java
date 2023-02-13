@@ -19,7 +19,7 @@ public class CircularSuffixArray {
     public CircularSuffixArray(String s) {
         if (s == null) throw new IllegalArgumentException("s cannot be null");
         this.s = s;
-        this.n = length();
+        this.n = s.length();
         indices = new Integer[n];
         for (int i = 0; i < n; i++) {
             indices[i] = i;
@@ -39,7 +39,7 @@ public class CircularSuffixArray {
     }
 
     public int length() {
-        return s.length();
+        return n;
     }
 
     // returns index of ith sorted suffix
