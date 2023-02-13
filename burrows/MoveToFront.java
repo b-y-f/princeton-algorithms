@@ -34,7 +34,14 @@ public class MoveToFront {
      * apply move-to-front decoding, reading from standard input and writing to standard output
      */
     public static void decode() {
+        initChars();
 
+        while (!BinaryStdIn.isEmpty()) {
+            char index = BinaryStdIn.readChar();
+            char c = chars[index];
+            BinaryStdOut.write(c);
+            moveElementToFront(index);
+        }
         cleanup();
     }
 
