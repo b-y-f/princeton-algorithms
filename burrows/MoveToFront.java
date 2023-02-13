@@ -9,25 +9,24 @@ import edu.princeton.cs.algs4.BinaryStdOut;
 
 public class MoveToFront {
     private static final int ASCII = 256;
-    private static char[] chars;
 
 
     /**
      * apply move-to-front encoding, reading from standard input and writing to standard output
      */
     public static void encode() {
-        initChars();
+        char[] chars = initChars();
 
         while (!BinaryStdIn.isEmpty()) {
             char inputChar = BinaryStdIn.readChar();
             for (int i = 0; i < ASCII; i++) {
                 if (inputChar == chars[i]) {
                     BinaryStdOut.write(i, 8);
-                    moveElementToFront(i);
+                    moveElementToFront(i, chars);
                 }
             }
         }
-        
+
         BinaryStdOut.close();
     }
 
@@ -35,32 +34,33 @@ public class MoveToFront {
      * apply move-to-front decoding, reading from standard input and writing to standard output
      */
     public static void decode() {
-        initChars();
+        char[] chars = initChars();
 
         while (!BinaryStdIn.isEmpty()) {
             char index = BinaryStdIn.readChar();
             char c = chars[index];
             BinaryStdOut.write(c);
-            moveElementToFront(index);
+            moveElementToFront(index, chars);
         }
 
         BinaryStdOut.close();
     }
 
 
-    private static void moveElementToFront(int index) {
-        char element = chars[index];
+    private static void moveElementToFront(int index, char[] old) {
+        char element = old[index];
         for (int i = index; i > 0; i--) {
-            chars[i] = chars[i - 1];
+            old[i] = old[i - 1];
         }
-        chars[0] = element;
+        old[0] = element;
     }
 
-    private static void initChars() {
-        chars = new char[ASCII];
+    private static char[] initChars() {
+        char[] chars = new char[ASCII];
         for (int i = 0; i < ASCII; i++) {
             chars[i] = (char) i;
         }
+        return chars;
     }
 
     /**
