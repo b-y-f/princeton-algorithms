@@ -7,7 +7,6 @@
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 
-import java.util.Arrays;
 
 /**
  * > java-algs4 BurrowsWheeler - < abra.txt | java-algs4 BurrowsWheeler +
@@ -15,6 +14,8 @@ import java.util.Arrays;
  * ABRACADABRA!
  */
 public class BurrowsWheeler {
+    private static final int R = 256;
+
     /**
      * apply Burrows-Wheeler transform,
      * reading from standard input and writing to standard output
@@ -48,22 +49,32 @@ public class BurrowsWheeler {
         String t = BinaryStdIn.readString();
 
         int n = t.length();
-        String[] s = new String[n];
+        char[] original = new char[n];
+        int[] next = new int[n];
+        int[] freq = new int[R + 1];
 
-        for (int ignore = 0; ignore < n; ignore++) {
-            for (int j = 0; j < n; j++) {
-                if (s[j] == null) {
-                    s[j] = "";
-                }
-                s[j] = t.charAt(j) + s[j];
-            }
-            Arrays.sort(s);
+        // calculate frequency table
+        for (int i = 0; i < n; i++) {
+            freq[t.charAt(i) + 1]++;
+        }
+        // calculate accumulate repeat
+        for (int i = 0; i < R; i++) {
+            freq[i + 1] += freq[i];
         }
 
-        BinaryStdOut.write(s[first]);
+        for (int i = 0; i < n; i++) {
+            int j = freq[t.charAt(i)]++;
+            original[j] = t.charAt(i);
+            next[j] = i;
+        }
+
+        // reconstruct original string
+        for (int i = 0; i < n; i++) {
+            BinaryStdOut.write(original[first]);
+            first = next[first];
+        }
 
         BinaryStdOut.close();
-
     }
 
     /**
