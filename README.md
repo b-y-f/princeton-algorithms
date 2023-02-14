@@ -6,7 +6,6 @@ Oringal : [COS 226](https://www.cs.princeton.edu/courses/archive/spring23/cos226
 
 ## COS 126
 
-- [x] Conditionals & Loops
 - [ ] N-Body Simulation
 - [ ] Conjunction Function
 - [ ] Recursive Graphics
