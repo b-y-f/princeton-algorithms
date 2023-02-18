@@ -5,12 +5,35 @@
  **************************************************************************** */
 
 public class BaseballElimination {
-    /**
-     * create a baseball division from given filename in format specified below
-     *
-     * @param filename
-     */
+    private final String[] teams;
+    private final int[] wins;
+    private final int[] losses;
+    private final int[] remaining;
+    private final int[][] against;
+    private final List<String> eliminated;
+
     public BaseballElimination(String filename) {
+        In in = new In(filename);
+        int n = in.readInt();
+
+        teams = new String[n];
+        wins = new int[n];
+        losses = new int[n];
+        remaining = new int[n];
+        against = new int[n][n];
+        eliminated = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            teams[i] = in.readString();
+            wins[i] = in.readInt();
+            losses[i] = in.readInt();
+            remaining[i] = in.readInt();
+            for (int j = 0; j < n; j++) {
+                against[i][j] = in.readInt();
+            }
+        }
+
+        checkElimination();
     }
 
     public int numberOfTeams() {
