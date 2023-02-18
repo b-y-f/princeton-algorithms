@@ -1,28 +1,35 @@
-/* *****************************************************************************
- *  Name:
- *  Date:
- *  Description:
- **************************************************************************** */
+import edu.princeton.cs.algs4.FlowEdge;
+import edu.princeton.cs.algs4.FlowNetwork;
+import edu.princeton.cs.algs4.FordFulkerson;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Stack;
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseballElimination {
-    private final String[] teams;
-    private final int[] wins;
-    private final int[] losses;
-    private final int[] remaining;
-    private final int[][] against;
-    private final List<String> eliminated;
+    private String[] teams;
+    private int[] wins;
+    private int[] losses;
+    private int[] remaining;
+    private int[][] against;
+    private List<String> eliminated;
 
     public BaseballElimination(String filename) {
         In in = new In(filename);
         int n = in.readInt();
+        parseData(in, n);
+        checkElimination();
+    }
 
+    private void parseData(In in, int n) {
         teams = new String[n];
         wins = new int[n];
         losses = new int[n];
         remaining = new int[n];
         against = new int[n][n];
         eliminated = new ArrayList<>();
-
         for (int i = 0; i < n; i++) {
             teams[i] = in.readString();
             wins[i] = in.readInt();
@@ -32,8 +39,6 @@ public class BaseballElimination {
                 against[i][j] = in.readInt();
             }
         }
-
-        checkElimination();
     }
 
     public int numberOfTeams() {
