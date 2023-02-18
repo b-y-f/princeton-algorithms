@@ -42,7 +42,7 @@ public class BaseballElimination {
     }
 
     public int numberOfTeams() {
-        return 0;
+        return teams.length;
     }
 
     public Iterable<String> teams() {
@@ -50,19 +50,24 @@ public class BaseballElimination {
     }
 
     public int wins(String team) {
-        return 0;
+        int index = getTeamIndex(team);
+        return remaining[index];
     }
 
     public int losses(String team) {
-        return 0;
+        int index = getTeamIndex(team);
+        return losses[index];
     }
 
     public int remaining(String team) {
-        return 0;
+        int index = getTeamIndex(team);
+        return remaining[index];
     }
 
     public int against(String team1, String team2) {
-        return 0;
+        int i = getTeamIndex(team1);
+        int j = getTeamIndex(team2);
+        return against[i][j];
     }
 
     public boolean isEliminated(String team) {
