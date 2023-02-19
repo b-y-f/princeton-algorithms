@@ -24,10 +24,10 @@ public class KdTree {
         if (t == null) {
             return false;
         }
-        if (t.point.x() == p.x() && t.point.y() == p.y()) {
+        if (t.getPoint().x() == p.x() && t.getPoint().y() == p.y()) {
             return true;
         }
-        return contains(t.left, p) || contains(t.right, p);
+        return contains(t.getLeft(), p) || contains(t.getRight(), p);
 
     }
 
@@ -60,24 +60,32 @@ public class KdTree {
             }
             size++;
         }
-        else if (getCutdim(p, level) < getCutdim(node.point, level)) {
+        else if (getCutdim(p, level) < getCutdim(node.getPoint(), level)) {
             if (isVertical(level)) {
-                node.left = insertRecur(p, node.left, level + 1, top, bot, left, node.point.x()
-                );
+                node.setLeft(
+                        insertRecur(p, node.getLeft(), level + 1, top, bot, left,
+                                    node.getPoint().x()
+                        ));
             }
             else {
-                node.left = insertRecur(p, node.left, level + 1, node.point.y(), bot, left, right
-                );
+                node.setLeft(
+                        insertRecur(p, node.getLeft(), level + 1, node.getPoint().y(), bot, left,
+                                    right
+                        ));
             }
         }
         else {
             if (isVertical(level)) {
-                node.right = insertRecur(p, node.right, level + 1, top, bot, node.point.x(), right
-                );
+                node.setRight(
+                        insertRecur(p, node.getRight(), level + 1, top, bot, node.getPoint().x(),
+                                    right
+                        ));
             }
             else {
-                node.right = insertRecur(p, node.right, level + 1, top, node.point.y(), left, right
-                );
+                node.setRight(
+                        insertRecur(p, node.getRight(), level + 1, top, node.getPoint().y(), left,
+                                    right
+                        ));
             }
         }
         return node;
@@ -97,10 +105,11 @@ public class KdTree {
 
     private void inorderRecur(KDNode node) {
         if (node != null) {
-            drawPointAndLine(node.point, node.x0, node.y0, node.x1, node.y1,
-                             isVertical(node.level));
-            inorderRecur(node.left);
-            inorderRecur(node.right);
+            drawPointAndLine(node.getPoint(), node.getX0(), node.getY0(), node.getX1(),
+                             node.getY1(),
+                             isVertical(node.getLevel()));
+            inorderRecur(node.getLeft());
+            inorderRecur(node.getRight());
         }
     }
 
@@ -129,16 +138,16 @@ public class KdTree {
 
     private Point2D nearestRecur(KDNode t, Point2D queryPt, Point2D bestPt, double bestDist) {
         if (t == null) return bestPt;
-        double dist = t.point.distanceTo(queryPt);
+        double dist = t.getPoint().distanceTo(queryPt);
         if (dist < bestDist) {
-            bestPt = t.point;
+            bestPt = t.getPoint();
             bestDist = dist;
         }
-        if (t.left != null && (t.point.x() - queryPt.x()) < bestDist) {
-            bestPt = nearestRecur(t.left, queryPt, bestPt, bestDist);
+        if (t.getLeft() != null && (t.getPoint().x() - queryPt.x()) < bestDist) {
+            bestPt = nearestRecur(t.getLeft(), queryPt, bestPt, bestDist);
         }
-        if (t.right != null && (queryPt.x() - t.point.x()) < bestDist) {
-            bestPt = nearestRecur(t.right, queryPt, bestPt, bestDist);
+        if (t.getRight() != null && (queryPt.x() - t.getPoint().x()) < bestDist) {
+            bestPt = nearestRecur(t.getRight(), queryPt, bestPt, bestDist);
         }
 
         return bestPt;
@@ -156,40 +165,24 @@ public class KdTree {
     private void rangeQueryRecur(RectHV rect, KDNode node, SET<Point2D> s) {
         if (node != null) {
             if (isLineIntersect(rect, node)) {
-                if (rect.contains(node.point)) {
-                    s.add(node.point);
+                if (rect.contains(node.getPoint())) {
+                    s.add(node.getPoint());
                 }
             }
-            rangeQueryRecur(rect, node.left, s);
-            rangeQueryRecur(rect, node.right, s);
+            rangeQueryRecur(rect, node.getLeft(), s);
+            rangeQueryRecur(rect, node.getRight(), s);
         }
     }
 
     private boolean isLineIntersect(RectHV r, KDNode node) {
-        if (isVertical(node.level)) {
-            return node.x0 <= r.xmax() || node.x0 >= r.xmin();
+        if (isVertical(node.getLevel())) {
+            return node.getX0() <= r.xmax() || node.getX0() >= r.xmin();
         }
         else {
-            return node.y0 <= r.ymax() || node.y0 >= r.ymin();
+            return node.getY0() <= r.ymax() || node.getY0() >= r.ymin();
         }
     }
 
     public static void main(String[] args) {
-    }
-
-    private static class KDNode {
-        private KDNode left, right;
-        private Point2D point;
-        private int level;
-        private double x0, y0, x1, y1;
-
-        private KDNode(Point2D p, int lvl, double x0, double y0, double x1, double y1) {
-            point = p;
-            level = lvl;
-            this.x0 = x0;
-            this.y0 = y0;
-            this.x1 = x1;
-            this.y1 = y1;
-        }
     }
 }

@@ -1,10 +1,5 @@
 public class GreatCircle {
     public static void main(String[] args) {
-        // Check that exactly four arguments were given
-        if (args.length != 4) {
-            System.out.println("Usage: java GreatCircle x1 y1 x2 y2");
-            return;
-        }
 
         // Parse the latitude and longitude values from the arguments and convert to radians
         double x1 = Math.toRadians(Double.parseDouble(args[0]));

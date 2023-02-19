@@ -2,9 +2,8 @@
 
 Leanring algo in coursera for fun :)
 
-Oringal : [COS 226](https://www.cs.princeton.edu/courses/archive/spring23/cos226/assignments.php) and [COS 126](https://www.cs.princeton.edu/courses/archive/fall22/cos126/assignments/) assignment
 
-## COS 126
+## Computer Science: Programming with a Purpose
 
 - [ ] N-Body Simulation
 - [ ] Conjunction Function
@@ -15,7 +14,7 @@ Oringal : [COS 226](https://www.cs.princeton.edu/courses/archive/spring23/cos226
 - [ ] Markov Model
 - [ ] TSP
 
-## COS 226
+## Algorithim Part1 + Part2
 
 - [x] percolation
 - [x] queues future:implement a LinkList version `queues`

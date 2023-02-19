@@ -1,10 +1,5 @@
 public class CMYKtoRGB {
     public static void main(String[] args) {
-        // Check that exactly four arguments were given
-        if (args.length != 4) {
-            System.out.println("Usage: java CMYKtoRGB cyan magenta yellow black");
-            return;
-        }
 
         // Parse the CMYK values from the command-line arguments
         double cyan = Double.parseDouble(args[0]);
