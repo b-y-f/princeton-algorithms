@@ -5,12 +5,13 @@ public class BarChartRacer {
 
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
+    public static final int PAUSE_FRAME = 50;
     private static In in;
+    private static Bar[] bars;
 
     public static void main(String[] args) {
-        // Load city population data from CSV file
         String fileName = args[0];
-        // int k = Integer.parseInt(args[1]);
+        int k = Integer.parseInt(args[1]);
         in = new In(fileName);
 
         String TITLE = in.readLine();
@@ -26,13 +27,20 @@ public class BarChartRacer {
             chart.reset();
 
             int maxBarNumber = in.readInt();
-            String time = "";
-            Bar[] bars = new Bar[maxBarNumber];
             in.readLine();
-            for (int i = 0; i < maxBarNumber; i++) {
+            String timeCap = "";
+            int linesSkip = 0;
+            if (k < maxBarNumber) {
+                bars = new Bar[k];
+                linesSkip = maxBarNumber - k;
+            }
+            else {
+                bars = new Bar[maxBarNumber];
+            }
+            for (int i = 0; i < bars.length; i++) {
                 String line = in.readLine();
                 String[] lines = line.split(",");
-                time = lines[0];
+                timeCap = lines[0];
                 Bar bar = new Bar(lines[1], Integer.parseInt(lines[3]), lines[4]);
                 bars[i] = bar;
             }
@@ -42,14 +50,16 @@ public class BarChartRacer {
                 chart.add(b.getName(), b.getValue(), b.getCategory());
             }
 
-            chart.setCaption(time);
+            for (int i = 0; i < linesSkip; i++) {
+                in.readLine();
+            }
 
+            chart.setCaption(timeCap);
 
             chart.draw();
             StdDraw.show();
             StdDraw.clear();
-            StdDraw.pause(50);
-
+            StdDraw.pause(PAUSE_FRAME);
         }
     }
 
