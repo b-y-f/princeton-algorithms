@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class Bar implements Comparable<Bar> {
-    private String name;
-    private int value;
-    private String category;
+    private final String name;
+    private final int value;
+    private final String category;
 
     public Bar(String name, int value, String category) {
         if (name == null || category == null || value < 0) {

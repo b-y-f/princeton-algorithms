@@ -5,15 +5,59 @@ public class BarChartRacer {
 
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
-    public static final int PAUSE_FRAME = 50;
-    private static In in;
-    private static Bar[] bars;
+    private static final int PAUSE_FRAME = 50;
 
     public static void main(String[] args) {
         String fileName = args[0];
         int k = Integer.parseInt(args[1]);
-        in = new In(fileName);
+        In in = new In(fileName);
 
+        BarChart chart = initChart(in);
+
+        while (in.hasNextLine()) {
+            chart.reset();
+
+            String totalBars = in.readLine();
+            if (totalBars.isEmpty()) {
+                continue;
+            }
+            int maxBarNumber = Integer.parseInt(totalBars);
+
+            int linesSkip = 0;
+            Bar[] bars;
+            if (k < maxBarNumber) {
+                bars = new Bar[k];
+                linesSkip = maxBarNumber - k;
+            }
+            else {
+                bars = new Bar[maxBarNumber];
+            }
+            
+            loadBarsFromData(in, chart, bars);
+
+            for (Bar b : bars) {
+                chart.add(b.getName(), b.getValue(), b.getCategory());
+            }
+
+            skipLines(in, linesSkip);
+
+            chart.draw();
+            StdDraw.show();
+            StdDraw.clear();
+            StdDraw.pause(PAUSE_FRAME);
+        }
+    }
+
+    private static void loadBarsFromData(In in, BarChart chart, Bar[] bars) {
+        for (int i = 0; i < bars.length; i++) {
+            String[] lines = in.readLine().split(",");
+            chart.setCaption(lines[0]);
+            bars[i] = new Bar(lines[1], Integer.parseInt(lines[3]), lines[4]);
+        }
+        Arrays.sort(bars, Collections.reverseOrder());
+    }
+
+    private static BarChart initChart(In in) {
         String TITLE = in.readLine();
         String X_AXIS_LABEL = in.readLine();
         String DATA_SOURCE = in.readLine();
@@ -22,44 +66,12 @@ public class BarChartRacer {
 
         StdDraw.setCanvasSize(WIDTH, HEIGHT);
         StdDraw.enableDoubleBuffering();
+        return chart;
+    }
 
-        while (in.hasNextLine()) {
-            chart.reset();
-
-            int maxBarNumber = in.readInt();
+    private static void skipLines(In in, int linesSkip) {
+        for (int i = 0; i < linesSkip; i++) {
             in.readLine();
-            String timeCap = "";
-            int linesSkip = 0;
-            if (k < maxBarNumber) {
-                bars = new Bar[k];
-                linesSkip = maxBarNumber - k;
-            }
-            else {
-                bars = new Bar[maxBarNumber];
-            }
-            for (int i = 0; i < bars.length; i++) {
-                String line = in.readLine();
-                String[] lines = line.split(",");
-                timeCap = lines[0];
-                Bar bar = new Bar(lines[1], Integer.parseInt(lines[3]), lines[4]);
-                bars[i] = bar;
-            }
-            Arrays.sort(bars, Collections.reverseOrder());
-
-            for (Bar b : bars) {
-                chart.add(b.getName(), b.getValue(), b.getCategory());
-            }
-
-            for (int i = 0; i < linesSkip; i++) {
-                in.readLine();
-            }
-
-            chart.setCaption(timeCap);
-
-            chart.draw();
-            StdDraw.show();
-            StdDraw.clear();
-            StdDraw.pause(PAUSE_FRAME);
         }
     }
 
