@@ -4,11 +4,9 @@
  *  Last modified:     1/1/2019
  **************************************************************************** */
 
-public class Test {
+package PACKAGE_NAME;
+public class Q45 {
     public static void main(String[] args) {
-        int a = 1;
-        int b = 2
-        int c = 3;
-
+        
     }
 }
